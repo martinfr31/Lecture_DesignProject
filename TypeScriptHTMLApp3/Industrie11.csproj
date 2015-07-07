@@ -21,14 +21,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="App\Service\getJsonData.js" />
+    <TypeScriptCompile Include="ChartApp.ts" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <TypeScriptCompile Include="Module\Process\Directives\FirstChartWidget.ts" />
+    <TypeScriptCompile Include="Module\Process\Model\ChartModule.ts" />
+    <TypeScriptCompile Include="Module\Process\Controller\ChartController.ts" />
     <Content Include="Module\Process\Service\Chart1.js" />
     <Content Include="Module\Process\Service\Chart2.js" />
+    <TypeScriptCompile Include="Module\Process\Service\ChartService.ts" />
     <Content Include="Module\Process\Views\firstenergywidget.html" />
+    <Content Include="Module\Process\Views\Charts.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -853,18 +859,14 @@
     <Content Include="Scripts\typings\angularjs\legacy\angular-scenario-1.0.d.ts" />
     <Content Include="Scripts\typings\jquery\jquery-tests.ts" />
     <Content Include="Scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\_app.ts" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app.ts" />
-    <TypeScriptCompile Include="Module\Process\Controller\EnergyController.ts" />
-    <TypeScriptCompile Include="Module\Process\Directives\FirstEnergyWidget.ts" />
-    <TypeScriptCompile Include="Module\Process\Model\EnergyModel.ts" />
-    <TypeScriptCompile Include="Module\Process\Service\EnergyService.ts" />
+    <TypeScriptCompile Include="EnergieApp.ts" />
     <TypeScriptCompile Include="App\Service\HttpHandlerService.ts" />
-    <TypeScriptCompile Include="Scripts\_app.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

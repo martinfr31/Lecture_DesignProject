@@ -2,7 +2,7 @@
 <html ng-app="app">
 <head>
     <meta charset="utf-8" />
-    <title>Energy-Dashboard</title>
+    <title>Industrie 11</title>
     <link href="Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="Content/app.css" rel="stylesheet" type="text/css" />
 <style>
@@ -39,40 +39,31 @@ body {
 </style>
 </head>
 <body class="skin-blue">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <div class="content">
             <div class="row">
+                <h1>Industrie 11 - Lecture Design Praktikum</h1>
+ 
+               <div ng-controller="ChartController">
+                    <chartwidget data="chartData" size="6"></chartwidget>
+                </div>
 
-
-
-               <!-- <div ng-controller="EnergyController">
-                    <energywidget data="energyData" size="6"></energywidget>
-                </div>-->
-                
-                <div class="major-nav"  id="majornav">
-			    major-nav
-			    </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
            <!-- <div>
-                <script src="Module/Process/Service/Chart1.js"></script>
-            </div>-->
-            <div>
                 <script src="Module/Process/Service/Chart2.js"></script>
-            </div>
+            </div>-->
 
-
-            </div>
+            </div>            
         </div>
     </div>
 
+    <!--<div class="major-nav"  id="majornav">
+        major-nav
+	</div>
+    <script src="App/Service/getJsonData.js"></script>-->
+
     <script src="Scripts/jquery-1.11.2.min.js"></script>
     <script src="Scripts/angular.js"></script>
-    <script src="App/Service/getJsonData.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
-
-<!--
-Nächste Schritte:
-Navigation bauen: Anfang Chart 1, Klick -> Chart2 oder 3

@@ -44,84 +44,84 @@ var App;
     App.HttpHandlerService = HttpHandlerService;
 })(App || (App = {}));
 /// <reference path="../../../Scripts/_app.ts" />
-var Energy;
-(function (Energy) {
-    var EnergyService = (function (_super) {
-        __extends(EnergyService, _super);
-        function EnergyService($http) {
+var Chart;
+(function (Chart) {
+    var ChartService = (function (_super) {
+        __extends(ChartService, _super);
+        function ChartService($http) {
             this.handlerUrl = 'http://cloud.livinglab-energy.de/ProSeminar/SchnittstelleLive.php';
             _super.call(this, $http);
         }
-        EnergyService.prototype.getData = function () {
+        ChartService.prototype.getData = function () {
             var config = {};
             return this.useGetHandler(config);
         };
-        EnergyService.$inject = ['$http'];
-        return EnergyService;
+        ChartService.$inject = ['$http'];
+        return ChartService;
     })(App.HttpHandlerService);
-    Energy.EnergyService = EnergyService;
-})(Energy || (Energy = {}));
+    Chart.ChartService = ChartService;
+})(Chart || (Chart = {}));
 /// <reference path="../../../Scripts/_app.ts" />
-var Energy;
-(function (Energy) {
+var Chart;
+(function (Chart) {
     'use strict';
 
-    var FirstEnergyWidget = (function () {
-        function FirstEnergyWidget() {
-            this.templateUrl = "Module/Process/Views/firstenergywidget.html";
+    var FirstChartWidget = (function () {
+        function FirstChartWidget() {
+            this.templateUrl = "Module/Process/Views/Charts.html";
             this.scope = {
                 data: "=",
                 size: "@"
             };
         }
-        FirstEnergyWidget.prototype.injection = function () {
+        FirstChartWidget.prototype.injection = function () {
             return [
                 function () {
-                    return new FirstEnergyWidget();
+                    return new FirstChartWidget();
                 }
             ];
         };
-        return FirstEnergyWidget;
+        return FirstChartWidget;
     })();
-    Energy.FirstEnergyWidget = FirstEnergyWidget;
-})(Energy || (Energy = {}));
+    Chart.FirstChartWidget = FirstChartWidget;
+})(Chart || (Chart = {}));
 /// <reference path="../../../Scripts/_app.ts" />
-var Energy;
-(function (Energy) {
+var Chart;
+(function (Chart) {
     'use strict';
 
-    var EnergyController = (function () {
-        function EnergyController($scope, serviceEnergy) {
+    var ChartController = (function () {
+        function ChartController($scope, serviceChart) {
             this.$scope = $scope;
-            console.log("Energy Constructor started");
-            serviceEnergy.getData().then(function (data) {
-                return $scope.energyData = data;
+            console.log("Chart Constructor started");
+            serviceChart.getData().then(function (data) {
+                return $scope.ChartData = data;
             });
             setInterval(function () {
                 $scope.$apply(function () {
-                    serviceEnergy.getData().then(function (data) {
-                        return $scope.energyData = data;
+                    serviceChart.getData().then(function (data) {
+                        return $scope.ChartData = data;
                     });
                 });
             }, 1000);
         }
-        EnergyController.$inject = ['$scope', 'energyService'];
-        return EnergyController;
+        ChartController.$inject = ['$scope', 'ChartService'];
+        return ChartController;
     })();
-    Energy.EnergyController = EnergyController;
-})(Energy || (Energy = {}));
+    Chart.ChartController = ChartController;
+})(Chart || (Chart = {}));
 /// <reference path="typings/angularjs/angular.d.ts" />
 /// <reference path="typings/jquery/jquery.d.ts" />
 /// <reference path="../App/Service/HttpHandlerService.ts" />
-/// <reference path="../Module/Process/Service/EnergyService.ts" />
-/// <reference path="../Module/Process/Directives/FirstEnergyWidget.ts" />
-/// <reference path="../Module/Process/Controller/EnergyController.ts" />
-/// <reference path="../app.ts" />
+/// <reference path="../Module/Process/Service/ChartService.ts" />
+/// <reference path="../Module/Process/Directives/FirstChartWidget.ts" />
+/// <reference path="../Module/Process/Controller/ChartController.ts" />
+/// <reference path="../ChartApp.ts" />
 /// <reference path="Scripts/_app.ts" />
 var App;
 (function (App) {
     'use strict';
-    angular.module('app', []).service('energyService', Energy.EnergyService).directive('energywidget', Energy.FirstEnergyWidget.prototype.injection()).controller('EnergyController', Energy.EnergyController);
+    angular.module('app', []).service('Service', Chart.ChartService).directive('chartwidget', Chart.FirstChartWidget.prototype.injection()).controller('ChartController', Chart.ChartController);
 })(App || (App = {}));
 /// <reference path="../../../Scripts/_app.ts" />
 //# sourceMappingURL=app.js.map

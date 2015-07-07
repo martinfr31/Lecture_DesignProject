@@ -2,9 +2,9 @@
 /// <reference path="typings/jquery/jquery.d.ts" />
 
 /// <reference path="../App/Service/HttpHandlerService.ts" /> 
-/// <reference path="../Module/Process/Service/EnergyService.ts" /> 
-/// <reference path="../Module/Process/Directives/FirstEnergyWidget.ts" /> 
-/// <reference path="../Module/Process/Controller/EnergyController.ts" /> 
-/// <reference path="../app.ts" />
+/// <reference path="../Module/Process/Service/ChartService.ts" /> 
+/// <reference path="../Module/Process/Directives/FirstChartWidget.ts" /> 
+/// <reference path="../Module/Process/Controller/ChartController.ts" /> 
+/// <reference path="../ChartApp.ts" />
 
 

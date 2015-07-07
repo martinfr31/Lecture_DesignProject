@@ -1,0 +1,40 @@
+﻿    body {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    width:100%;
+    }
+    
+       #headcontainer {
+
+	width:100%;
+	top:0;
+	z-index:2;
+	}
+		
+	.gamesheadcontainer {
+	background: #F8F8F8;
+    border-bottom: 1px solid #C9C9C9;
+    text-align:center;
+    opacity:0.98;
+	}
+	
+	#head {
+    background: #F8F8F8;
+    border-bottom: 1px solid #C9C9C9;
+    font-size: 1.5em;
+    padding: 0.6em 1em 1em 1em;
+    height: 1em;
+    opacity:0.95;
+    }
+    
+            
+    #headmiddle {
+    margin:0 auto;
+    width:8em;
+    text-align:center;
+    }
+    
+    .blue {
+    color: #1D73D8;
+    }
+    
+   

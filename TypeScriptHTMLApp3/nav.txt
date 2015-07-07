@@ -1,0 +1,2 @@
+[ { "Name" : "Heise", "Link" : "http://www.heise.de" }, 
+{ "Name" : "Heise2", "Link" : "http://www.heise.de" } ]

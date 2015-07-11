@@ -89,6 +89,7 @@ var App;
 /// <reference path="../../Scripts/_app.ts" />
 var App;
 (function (App) {
+<<<<<<< HEAD
     var Service = (function () {
         function Service() {
         }
@@ -124,6 +125,34 @@ var App;
         return HttpHandlerService;
     })(Service);
     App.HttpHandlerService = HttpHandlerService;
+=======
+    'use strict';
+    angular.module('app', []).service('Service', Chart.ChartService).directive('chartwidget', Chart.FirstChartWidget.prototype.injection()).directive('processstepchartwidget', Chart.SecondChartWidget.prototype.injection()).controller('ChartController', Chart.ChartController);
+>>>>>>> origin/master
 })(App || (App = {}));
 /// <reference path="../../../Scripts/_app.ts" />
+/// <reference path="../../../Scripts/_app.ts" />
+var Chart;
+(function (Chart) {
+    'use strict';
+
+    var SecondChartWidget = (function () {
+        function SecondChartWidget() {
+            this.templateUrl = "Module/Process/Views/ProcessStepChart.html";
+            this.scope = {
+                data: "=",
+                size: "@"
+            };
+        }
+        SecondChartWidget.prototype.injection = function () {
+            return [
+                function () {
+                    return new SecondChartWidget();
+                }
+            ];
+        };
+        return SecondChartWidget;
+    })();
+    Chart.SecondChartWidget = SecondChartWidget;
+})(Chart || (Chart = {}));
 //# sourceMappingURL=app.js.map

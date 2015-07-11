@@ -14,7 +14,8 @@ module Chart {
 
         public link;
         constructor() {
-            this.templateUrl = "Module/Process/Views/Charts.html";
+            //this.templateUrl = "Module/Process/Views/Charts.html";
+            this.templateUrl = "Module/Process/Views/firstenergywidget.html";
             this.scope = {
                 data: "=",
                 size: "@"

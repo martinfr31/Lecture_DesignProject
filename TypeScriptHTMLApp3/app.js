@@ -4,52 +4,14 @@
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-/// <reference path="../../Scripts/_app.ts" />
-var App;
-(function (App) {
-    var Service = (function () {
-        function Service() {
-        }
-        return Service;
-    })();
-    App.Service = Service;
-    var HttpHandlerService = (function (_super) {
-        __extends(HttpHandlerService, _super);
-        function HttpHandlerService($http) {
-            _super.call(this);
-            this.httpService = $http;
-        }
-        HttpHandlerService.prototype.useGetHandler = function (params) {
-            var _this = this;
-            var result = this.httpService.get(this.handlerUrl, params).then(function (response) {
-                return _this.handlerResponded(response, params);
-            });
-            return result;
-        };
-
-        HttpHandlerService.prototype.usePostHandler = function (params) {
-            var _this = this;
-            var result = this.httpService.post(this.handlerUrl, params).then(function (response) {
-                return _this.handlerResponded(response, params);
-            });
-            return result;
-        };
-
-        HttpHandlerService.prototype.handlerResponded = function (response, params) {
-            response.data.requestParams = params;
-            return response.data;
-        };
-        return HttpHandlerService;
-    })(Service);
-    App.HttpHandlerService = HttpHandlerService;
-})(App || (App = {}));
 /// <reference path="../../../Scripts/_app.ts" />
 var Chart;
 (function (Chart) {
     var ChartService = (function (_super) {
         __extends(ChartService, _super);
         function ChartService($http) {
-            this.handlerUrl = 'http://cloud.livinglab-energy.de/ProSeminar/SchnittstelleLive.php';
+            //this.handlerUrl = 'chart1_demo_testdaten.txt';
+            this.handlerUrl = '../../../energyData.txt';
             _super.call(this, $http);
         }
         ChartService.prototype.getData = function () {
@@ -68,7 +30,8 @@ var Chart;
 
     var FirstChartWidget = (function () {
         function FirstChartWidget() {
-            this.templateUrl = "Module/Process/Views/Charts.html";
+            //this.templateUrl = "Module/Process/Views/Charts.html";
+            this.templateUrl = "Module/Process/Views/firstenergywidget.html";
             this.scope = {
                 data: "=",
                 size: "@"
@@ -110,6 +73,12 @@ var Chart;
     })();
     Chart.ChartController = ChartController;
 })(Chart || (Chart = {}));
+/// <reference path="Scripts/_app.ts" />
+var App;
+(function (App) {
+    'use strict';
+    angular.module('app', []).service('Service', Chart.ChartService).directive('chartwidget', Chart.FirstChartWidget.prototype.injection()).controller('ChartController', Chart.ChartController);
+})(App || (App = {}));
 /// <reference path="typings/angularjs/angular.d.ts" />
 /// <reference path="typings/jquery/jquery.d.ts" />
 /// <reference path="../App/Service/HttpHandlerService.ts" />
@@ -117,11 +86,44 @@ var Chart;
 /// <reference path="../Module/Process/Directives/FirstChartWidget.ts" />
 /// <reference path="../Module/Process/Controller/ChartController.ts" />
 /// <reference path="../ChartApp.ts" />
-/// <reference path="Scripts/_app.ts" />
+/// <reference path="../../Scripts/_app.ts" />
 var App;
 (function (App) {
-    'use strict';
-    angular.module('app', []).service('Service', Chart.ChartService).directive('chartwidget', Chart.FirstChartWidget.prototype.injection()).controller('ChartController', Chart.ChartController);
+    var Service = (function () {
+        function Service() {
+        }
+        return Service;
+    })();
+    App.Service = Service;
+    var HttpHandlerService = (function (_super) {
+        __extends(HttpHandlerService, _super);
+        function HttpHandlerService($http) {
+            _super.call(this);
+            this.httpService = $http;
+        }
+        HttpHandlerService.prototype.useGetHandler = function (params) {
+            var _this = this;
+            var result = this.httpService.get(this.handlerUrl, params).then(function (response) {
+                return _this.handlerResponded(response, params);
+            });
+            return result;
+        };
+
+        HttpHandlerService.prototype.usePostHandler = function (params) {
+            var _this = this;
+            var result = this.httpService.post(this.handlerUrl, params).then(function (response) {
+                return _this.handlerResponded(response, params);
+            });
+            return result;
+        };
+
+        HttpHandlerService.prototype.handlerResponded = function (response, params) {
+            response.data.requestParams = params;
+            return response.data;
+        };
+        return HttpHandlerService;
+    })(Service);
+    App.HttpHandlerService = HttpHandlerService;
 })(App || (App = {}));
 /// <reference path="../../../Scripts/_app.ts" />
 //# sourceMappingURL=app.js.map

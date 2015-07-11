@@ -5,7 +5,8 @@ module Chart {
         static $inject = ['$http'];
 
         constructor($http: ng.IHttpService) {
-            this.handlerUrl = 'http://cloud.livinglab-energy.de/ProSeminar/SchnittstelleLive.php';
+            //this.handlerUrl = 'chart1_demo_testdaten.txt';
+            this.handlerUrl = '../../../energyData.txt';
             super($http);
         }
 

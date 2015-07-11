@@ -1,0 +1,3 @@
+[{"power":3,"hour":1436523443181,"id":1,"devicename":"Fernseher"},
+{"power":6,"hour":1536523443181,"id":2,"devicename":"Computer"}
+]

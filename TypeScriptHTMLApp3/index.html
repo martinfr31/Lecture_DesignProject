@@ -1,10 +1,10 @@
 ﻿﻿<!DOCTYPE html>
 <html ng-app="app">
 <head>
-    <meta charset="utf-8" />
-    <title>Industrie 11</title>
-    <link href="Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="Content/app.css" rel="stylesheet" type="text/css" />
+	<meta charset="utf-8" />
+	<title>Industrie 11</title>
+	<link href="Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="Content/app.css" rel="stylesheet" type="text/css" />
 <style>
 
 circle,
@@ -18,52 +18,59 @@ circle {
 }
 
 body {
-    font: 10px sans-serif;
+	font: 10px sans-serif;
 }
 
 .bar rect {
-    fill: steelblue;
-    shape-rendering: crispEdges;
+	fill: steelblue;
+	shape-rendering: crispEdges;
 }
 
 .bar text {
-    fill: #fff;
+	fill: #fff;
 }
 
 .axis path, .axis line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: steelblue;
+}
+
+.x.axis path {
+  display: none;
 }
 
 </style>
 </head>
 <body class="skin-blue">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-    <div class="wrapper row-offcanvas row-offcanvas-left">
-        <div class="content">
-            <div class="row">
-                <h1>Industrie 11 - Lecture Design Praktikum</h1>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+	<div class="wrapper row-offcanvas row-offcanvas-left">
+		<div class="content">
+			<div class="row">
+				<h1>Industrie 11 - Lecture Design Praktikum</h1>
  
-               <div ng-controller="ChartController">
-                    <chartwidget data="chartData" size="6"></chartwidget>
-                </div>
+			   <!--<div ng-controller="ChartController">
+					<chartwidget data="chartData" size="6"></chartwidget>
+				</div>-->
 
-           <!-- <div>
-                <script src="Module/Process/Service/Chart2.js"></script>
-            </div>-->
-
-            </div>            
-        </div>
-    </div>
-
-    <!--<div class="major-nav"  id="majornav">
-        major-nav
+				<div ng-controller="ChartController">
+					<script src="Module/Process/Service/ProcessStepChart.js"></script>
+				</div>
+			</div>            
+		</div>
 	</div>
-    <script src="App/Service/getJsonData.js"></script>-->
 
-    <script src="Scripts/jquery-1.11.2.min.js"></script>
-    <script src="Scripts/angular.js"></script>
-    <script src="app.js"></script>
+	<!--<div class="major-nav"  id="majornav">
+		major-nav
+	</div>
+	<script src="App/Service/getJsonData.js"></script>-->
+
+	<script src="Scripts/jquery-1.11.2.min.js"></script>
+	<script src="Scripts/angular.js"></script>
+	<script src="app.js"></script>
 </body>
 </html>

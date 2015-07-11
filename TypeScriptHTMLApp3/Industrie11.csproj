@@ -30,11 +30,14 @@
     <TypeScriptCompile Include="Module\Process\Directives\FirstChartWidget.ts" />
     <TypeScriptCompile Include="Module\Process\Model\ChartModule.ts" />
     <TypeScriptCompile Include="Module\Process\Controller\ChartController.ts" />
+    <TypeScriptCompile Include="Module\Process\Directives\SecondChartWidget.ts" />
     <Content Include="Module\Process\Service\Chart1.js" />
     <Content Include="Module\Process\Service\Chart2.js" />
     <TypeScriptCompile Include="Module\Process\Service\ChartService.ts" />
+    <Content Include="Module\Process\Service\ProcessStepChart.js" />
     <Content Include="Module\Process\Views\firstenergywidget.html" />
     <Content Include="Module\Process\Views\Charts.html" />
+    <Content Include="Module\Process\Views\ProcessStepChart.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />

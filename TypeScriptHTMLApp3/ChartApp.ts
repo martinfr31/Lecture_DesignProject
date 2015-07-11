@@ -6,7 +6,7 @@ module App {
         .service('Service', Chart.ChartService)
     //Directives
         .directive('chartwidget', Chart.FirstChartWidget.prototype.injection())
-        .directive('processstepchartwidget', Chart.SecondChartWidget.prototype.injection())
+       // .directive('processstepchartwidget', Chart.SecondChartWidget.prototype.injection())
     //Controller
         .controller('ChartController', Chart.ChartController)
 } 

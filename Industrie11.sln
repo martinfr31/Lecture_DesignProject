@@ -15,11 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		TypeScriptHTMLApp3\chart1_demo.txt = TypeScriptHTMLApp3\chart1_demo.txt
 		TypeScriptHTMLApp3\chart1_demo_testdaten.txt = TypeScriptHTMLApp3\chart1_demo_testdaten.txt
-<<<<<<< HEAD
-		TypeScriptHTMLApp3\energyData.txt = TypeScriptHTMLApp3\energyData.txt
-=======
-		chart2_demo.csv = chart2_demo.csv
->>>>>>> origin/master
+		TypeScriptHTMLApp3\chart2_demo.csv = TypeScriptHTMLApp3\chart2_demo.csv
+		TypeScriptHTMLApp3\chart2_demo.txt = TypeScriptHTMLApp3\chart2_demo.txt
 	EndProjectSection
 EndProject
 Global

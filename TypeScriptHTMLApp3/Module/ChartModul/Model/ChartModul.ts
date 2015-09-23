@@ -1,11 +1,10 @@
 ﻿/// <reference path="../../../Scripts/_app.ts" />
 module Chart {
     export interface IChartModel {
-
         power: number;
         hour: string;
 
-       /*ProdID: number;
+        /*ProdID: number;
         name: string;
         ProzessID: number;
         ProzName: string;
@@ -17,4 +16,3 @@ module Chart {
 
     }
 } 
- 

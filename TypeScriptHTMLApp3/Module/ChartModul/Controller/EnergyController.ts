@@ -1,11 +1,11 @@
 ﻿/// <reference path="../../../Scripts/_app.ts" />
-module Energy {
+module Chartx {
     'use strict';
     export interface IEnergyCtrlScope extends ng.IScope {
         energyData: IEnergyModel;
     }
 
-    export class EnergyController {
+    export class ChartController {
         scope: IEnergyCtrlScope;
 
         static $inject = ['$scope', 'energyService'];
@@ -17,7 +17,7 @@ module Energy {
                 $scope.$apply(function () {
                     serviceEnergy.getData().then((data) => $scope.energyData = data);
                 });
-            }, 1000); 
+            }, 1000);
         }
     }
 }

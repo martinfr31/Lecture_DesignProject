@@ -1,21 +1,21 @@
-﻿ /// <reference path="../../../Scripts/_app.ts" />
+﻿/// <reference path="../../../Scripts/_app.ts" />
 module Chart {
     'use strict';
     export interface IChartCtrlScope extends ng.IScope {
-        ChartData: IChartModel;
+        chartData: IChartModel;
     }
 
     export class ChartController {
         scope: IChartCtrlScope;
 
-        static $inject = ['$scope', 'ChartService'];
+        static $inject = ['$scope', 'chartService'];
 
         constructor(private $scope: IChartCtrlScope, serviceChart: ChartService) {
             console.log("Chart Constructor started");
-            serviceChart.getData().then((data) => $scope.ChartData = data);
+            serviceChart.getData().then((data) => $scope.chartData = data);
             setInterval(function () {
                 $scope.$apply(function () {
-                    serviceChart.getData().then((data) => $scope.ChartData = data);
+                    serviceChart.getData().then((data) => $scope.chartData = data);
                 });
             }, 1000); 
         }

@@ -1,12 +1,11 @@
 ﻿/// <reference path="../../../Scripts/_app.ts" />
-module Chart {
-    export class ChartService extends App.HttpHandlerService {
+module Chartx {
+    export class EnergyService extends App.HttpHandlerService {
 
         static $inject = ['$http'];
 
         constructor($http: ng.IHttpService) {
-            //this.handlerUrl = 'chart1_demo_testdaten.txt';
-            this.handlerUrl = '../../../energyData.txt';
+            this.handlerUrl = 'http://cloud.livinglab-energy.de/ProSeminar/SchnittstelleLive.php';
             super($http);
         }
 

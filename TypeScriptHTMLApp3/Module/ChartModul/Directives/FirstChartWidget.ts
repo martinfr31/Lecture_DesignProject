@@ -1,11 +1,11 @@
 ﻿/// <reference path="../../../Scripts/_app.ts" />
-module Energy {
+module Chart {
     'use strict';
 
-    export class FirstEnergyWidget implements ng.IDirective {
+    export class FirstChartWidget implements ng.IDirective {
         public injection(): Array<any> {
             return [
-                () => { return new FirstEnergyWidget() }
+                () => { return new FirstChartWidget() }
             ]
         }
 
@@ -14,7 +14,7 @@ module Energy {
 
         public link;
         constructor() {
-            this.templateUrl = "Module/Process/Views/firstenergywidget.html";
+            this.templateUrl = "Module/ChartModul/Views/firstchartwidget.html";
             this.scope = {
                 data: "=",
                 size: "@"

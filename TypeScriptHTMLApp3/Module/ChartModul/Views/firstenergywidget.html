@@ -1,0 +1,13 @@
+﻿<section class="col-md-{{size}}">
+    <div class="box box-primary direct-chat direct-chat-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Aktueller Energieverbrauch</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <h1 style="padding-right:20px;font-size:40pt">{{data[0].power}} W</h1>
+        </div><!-- /.box-body -->
+        <div class="box-footer">
+            {{data[0].hour | date:'yyyy-MM-dd HH:mm:ss'}} Uhr
+        </div><!-- /.box-footer-->
+    </div>
+</section>

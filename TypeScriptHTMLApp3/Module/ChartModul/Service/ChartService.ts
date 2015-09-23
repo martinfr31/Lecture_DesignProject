@@ -1,6 +1,6 @@
 ﻿/// <reference path="../../../Scripts/_app.ts" />
-module Energy {
-    export class EnergyService extends App.HttpHandlerService {
+module Chart {
+    export class ChartService extends App.HttpHandlerService {
 
         static $inject = ['$http'];
 

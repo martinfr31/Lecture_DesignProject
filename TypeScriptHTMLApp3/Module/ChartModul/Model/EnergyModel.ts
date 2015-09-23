@@ -1,5 +1,5 @@
 ﻿/// <reference path="../../../Scripts/_app.ts" />
-module Energy {
+module Chartx {
     export interface IEnergyModel {
              power: number;
              hour: string;

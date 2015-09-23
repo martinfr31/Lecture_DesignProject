@@ -6,8 +6,19 @@
     <title>Energy-Dashboard</title>
     <link href="Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="Content/app.css" rel="stylesheet" type="text/css" />
-    <script src="Scripts/d3/d3.js"></script>
+    <style>
+        circle,
+        path {
+            cursor: pointer;
+        }
+
+        circle {
+            fill: none;
+            pointer-events: all;
+        }
+    </style>
 </head>
+
 <body class="skin-blue">
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <div class="content">

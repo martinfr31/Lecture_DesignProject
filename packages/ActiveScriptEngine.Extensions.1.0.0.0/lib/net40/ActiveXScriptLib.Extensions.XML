@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ActiveXScriptLib.Extensions</name>
+    </assembly>
+    <members>
+        <member name="T:ActiveXScriptLib.Extensions.ActiveScriptEngineExtensions">
+            <summary>
+            Provides useful extension methods when using the ActiveScriptEngine.
+            </summary>
+        </member>
+        <member name="M:ActiveXScriptLib.Extensions.ActiveScriptEngineExtensions.NewInstanceOf(ActiveXScriptLib.ActiveScriptEngine,System.String)">
+            <summary>
+            Creates a new instance of the specified class from within the script engine and returns it.
+            </summary>
+            <param name="engine">The ActiveScriptEngine to create the instance from.</param>
+            <param name="className">The name of the class to create an instance of.</param>
+            <returns>The created instance.</returns>
+        </member>
+        <member name="M:ActiveXScriptLib.Extensions.ActiveScriptEngineExtensions.Evaluate``1(ActiveXScriptLib.ActiveScriptEngine,System.String)">
+            <summary>
+            Provides a generic overload for engine.Evaluate.
+            This method will invoke Convert.ChangeType on the returned value to try convert it to type T.
+            This provides a more easier way to get the value of a type you want.
+            </summary>
+            <typeparam name="T">The Type to convert the returned value of Evaluate to.</typeparam>
+            <param name="engine">The ActiveScriptEngine to invoke Evaluate on.</param>
+            <param name="code">The code to evaluate inside engine.</param>
+            <returns>The value returned after the evaluation as type T.</returns>
+        </member>
+    </members>
+</doc>

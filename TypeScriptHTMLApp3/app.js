@@ -44,7 +44,7 @@ var Chart;
     var ChartService = (function (_super) {
         __extends(ChartService, _super);
         function ChartService($http) {
-            this.handlerUrl = 'http://cloud.livinglab-energy.de/ProSeminar/SchnittstelleLive.php';
+            this.handlerUrl = 'chart1_demo_testdaten.txt';
             _super.call(this, $http);
         }
         ChartService.prototype.getData = function () {
@@ -99,6 +99,7 @@ var Chart;
 })(Chart || (Chart = {}));
 /// <reference path="typings/angularjs/angular.d.ts" />
 /// <reference path="typings/jquery/jquery.d.ts" />
+/// <reference path="typings/d3/d3.d.ts" />
 /// <reference path="../App/Service/HttpHandlerService.ts" /> 
 /// <reference path="../Module/ChartModul/Service/ChartService.ts" /> 
 /// <reference path="../Module/ChartModul/Directives/FirstChartWidget.ts" /> 

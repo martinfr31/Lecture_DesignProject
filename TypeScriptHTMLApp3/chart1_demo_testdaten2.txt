@@ -1,18 +1,18 @@
-[{
+{
  "name": "flare",
  "children": [
   {
    "name": "Product1",
    "children": [
 		{
-		   "name": "Process1",
+		   "name": "P1",
 		   "children": 
 			[
 				{"ProdID":1,"name":"Product One1","ProzessID":1,"ProzName":"Aus dem Lager holen","ResID":2,"ResName":"Res1","ResTyp":"Mitarbeiter","size":20,"ResVeranederbar":1}
 			]
 		},
 		{
-		   "name": "Process2",
+		   "name": "P2",
 		   "children": 
 			[
 				{"ProdID":1,"name":"Product One2","ProzessID":2,"ProzName":"Fertigungsschritt1","ResID":1,"ResName":"Res1","ResTyp":"Maschine","size":50,"ResVeranederbar":1},
@@ -24,7 +24,7 @@
 			]
 		},
 		{
-		   "name": "Process3",
+		   "name": "P3",
 		   "children": 
 			[
 				{"ProdID":1,"name":"Product One8","ProzessID":3,"ProzName":"Fertigungsschritt2","ResID":1,"ResName":"Res1","ResTyp":"Maschine","size":50,"ResVeranederbar":1},
@@ -34,7 +34,7 @@
 			]
 		},
 		{
-		   "name": "Process4",
+		   "name": "P4",
 		   "children": 
 			[
 		{"ProdID":1,"name":"Product One12","ProzessID":4,"ProzName":"Verpackung/Verlagerung","ResID":1,"ResName":"Res1","ResTyp":"Maschine","size":40,"ResVeranederbar":1},
@@ -49,7 +49,7 @@
    "name": "Product2",
    "children": [
 		{
-		   "name": "Process1",
+		   "name": "P1",
 		   "children": 
 			[
 				{"ProdID":2,"name":"Product Two1","ProzessID":1,"ProzName":"Aus dem Lager holen","ResID":1,"ResName":"Res1","ResTyp":"Maschine","size":40.0,"ResVeranederbar":1},
@@ -57,7 +57,7 @@
 			]
 		},
 		{
-		   "name": "Process2",
+		   "name": "P2",
 		   "children": 
 			[
 				{"ProdID":2,"name":"Product Two3","ProzessID":2,"ProzName":"Fertigungsschritt1","ResID":1,"ResName":"Res1","ResTyp":"Maschine","size":60.0,"ResVeranederbar":1},
@@ -68,7 +68,7 @@
 			]
 		},
 		{
-		   "name": "Process3",
+		   "name": "P3",
 		   "children": 
 			[
 				{"ProdID":2,"name":"Product Two8","ProzessID":3,"ProzName":"Fertigungsschritt2","ResID":1,"ResName":"Res1","ResTyp":"Maschine","size":50.0,"ResVeranederbar":1},
@@ -79,14 +79,14 @@
 			]
 		},
 		{
-		   "name": "Process4",
+		   "name": "P4",
 		   "children": 
 			[
 				{"ProdID":2,"name":"Product Two13","ProzessID":4,"ProzName":"100%Kontrolle","ResID":1,"ResName":"Res1","ResTyp":"Mitarbeiter","size":20.0,"ResVeranederbar":1}
 			]
 		},
 		{
-		   "name": "Process5",
+		   "name": "P5",
 		   "children": 
 			[
 				{"ProdID":2,"name":"Product Two14","ProzessID":5,"ProzName":"Verpackung/Verlagerung","ResID":1,"ResName":"Res1","ResTyp":"Maschine","size":40.0,"ResVeranederbar":1},
@@ -98,4 +98,4 @@
 	]
   }
  ]
-}]
+}

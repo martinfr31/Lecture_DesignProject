@@ -1,0 +1,712 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Interop.ActiveXScript</name>
+    </assembly>
+    <members>
+        <member name="T:Interop.ActiveXScript.ScriptItemFlags">
+            <summary>
+            Flags associated with a named item.
+            http://msdn.microsoft.com/en-us/library/s8eyc3sh(v=vs.94).aspx
+            </summary>
+        </member>
+        <member name="F:Interop.ActiveXScript.ScriptItemFlags.IsVisible">
+            <summary>
+            Indicates that the item's name is available in the name space of the script, 
+            allowing access to the properties, methods, and events of the item. 
+            By convention the properties of the item include the item's children; therefore,
+            all child object properties and methods (and their children, recursively) will be accessible.
+            </summary>
+        </member>
+        <member name="F:Interop.ActiveXScript.ScriptItemFlags.IsSource">
+            <summary>
+            Indicates that the item sources events that the script can sink. Child objects (properties of 
+            the object that are in themselves objects) can also source events to the script. This is not
+            recursive, but it provides a convenient mechanism for the common case, for example, of creating
+            a container and all of its member controls.
+            </summary>
+        </member>
+        <member name="F:Interop.ActiveXScript.ScriptItemFlags.GlobalMembers">
+            <summary>
+            Indicates that the item is a collection of global properties and methods associated with the script. 
+            Normally, a scripting engine would ignore the object name (other than for the purpose of using 
+            it as a cookie for the IActiveScriptSite::GetItemInfo method, or for resolving explicit scoping)
+            and expose its members as global variables and methods. This allows the host to extend the library
+            (run-time functions and so on) available to the script. It is left to the scripting engine to deal
+            with name conflicts (for example, when two SCRIPTITEM_GLOBALMEMBERS items have methods of the same name),
+            although an error should not be returned because of this situation.
+            </summary>
+        </member>
+        <member name="F:Interop.ActiveXScript.ScriptItemFlags.IsPersistent">
+            <summary>
+            Indicates that the item should be saved if the scripting engine is saved. Similarly, setting this 
+            flag indicates that a transition back to the initialized state should retain the item's name and
+            type information (the scripting engine must, however, release all pointers to interfaces on the actual object).
+            </summary>
+        </member>
+        <member name="F:Interop.ActiveXScript.ScriptItemFlags.CodeOnly">
+            <summary>
+            Indicates that the named item represents a code-only object, and that the host has no 
+            IUnknown to be associated with this code-only object. The host only has a name for 
+            this object. In object-oriented languages such as C++, this flag would create a class.
+            Not all languages support this flag.
+            </summary>
+        </member>
+        <member name="F:Interop.ActiveXScript.ScriptItemFlags.NoCode">
+            <summary>
+            Indicates that the item is simply a name being added to the script's name space, 
+            and should not be treated as an item for which code should be associated. 
+            For example, without this flag being set, VBScript will create a separate 
+            module for the named item, and C++ might create a separate wrapper class for the named item.
+            </summary>
+        </member>
+        <member name="T:Interop.ActiveXScript.ScriptState">
+            <summary>
+            Specifies the state of a scripting engine. This enumeration is used by the 
+            IActiveScript::GetScriptState, IActiveScript::SetScriptState, and IActiveScriptSite::OnStateChange methods.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/f7z7cxxa(v=vs.94).aspx"/>
+            </summary>
+        </member>
+        <member name="F:Interop.ActiveXScript.ScriptState.Uninitialized">
+            <summary>
+            Script has just been created, but has not yet been initialized using an IPersist* 
+            interface and IActiveScript::SetScriptSite.
+            </summary>
+        </member>
+        <member name="F:Interop.ActiveXScript.ScriptState.Initialized">
+            <summary>
+            Script has been initialized, but is not running (connecting to other objects or sinking events)
+            or executing any code. Code can be queried for execution by calling the IActiveScriptParse::ParseScriptText method.
+            </summary>
+        </member>
+        <member name="F:Interop.ActiveXScript.ScriptState.Started">
+            <summary>
+            Script can execute code, but is not yet sinking the events of objects added by the 
+            IActiveScript::AddNamedItem method.
+            </summary>
+        </member>
+        <member name="F:Interop.ActiveXScript.ScriptState.Connected">
+            <summary>
+            Script is loaded and connected for sinking events.
+            </summary>
+        </member>
+        <member name="F:Interop.ActiveXScript.ScriptState.Disconnected">
+            <summary>
+            Script is loaded and has a run-time execution state, but is temporarily disconnected from sinking events.
+            </summary>
+        </member>
+        <member name="F:Interop.ActiveXScript.ScriptState.Closed">
+            <summary>
+            Script has been closed. The scripting engine no longer works and returns errors for most methods.
+            </summary>
+        </member>
+        <member name="F:Interop.ActiveXScript.ScriptTextFlags.IsVisible">
+            <summary>
+            Indicates that the script text should be visible (and, therefore, callable by name) as 
+            a global method in the name space of the script.
+            </summary>
+        </member>
+        <member name="F:Interop.ActiveXScript.ScriptTextFlags.IsExpression">
+            <summary>
+            If the distinction between a computational expression and a statement is important but 
+            syntactically ambiguous in the script language, this flag specifies that the scriptlet 
+            is to be interpreted as an expression, rather than as a statement or list of statements.
+            By default, statements are assumed unless the correct choice can be determined from the
+            syntax of the scriptlet text.
+            </summary>
+        </member>
+        <member name="F:Interop.ActiveXScript.ScriptTextFlags.IsPersistent">
+            <summary>
+            Indicates that the code added during this call should be saved if the scripting engine 
+            is saved (for example, through a call to IPersist*::Save), or if the scripting engine 
+            is reset by way of a transition back to the initialized state.
+            </summary>
+        </member>
+        <member name="T:Interop.ActiveXScript.IActiveScript">
+            <summary>
+            Provides the methods necessary to initialize the scripting engine. 
+            The scripting engine must implement the IActiveScript interface.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/ky29ffxd(v=vs.94).aspx"/>
+            </summary>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScript.SetScriptSite(Interop.ActiveXScript.IActiveScriptSite)">
+            <summary>
+            Informs the scripting engine of the IActiveScriptSite interface site provided by the host. 
+            Call this method before any other IActiveScript interface methods is used.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/a3a8btht(v=vs.94).aspx"/>
+            </summary>
+            <param name="site">Address of the host-supplied script site to be associated with this 
+            instance of the scripting engine. The site must be uniquely assigned to this scripting engine instance;
+            it cannot be shared with other scripting engines.</param>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScript.GetScriptSite(System.Guid@)">
+            <summary>
+            Retrieves the site object associated with the Windows Script engine.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/876ah4t1(v=vs.94).aspx"/>
+            </summary>
+            <param name="iid">Identifier of the requested interface.</param>        
+            <returns>The interface pointer to the host's site object.</returns>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScript.SetScriptState(Interop.ActiveXScript.ScriptState)">
+            <summary>
+            Puts the scripting engine into the given state. This method can be called from non-base
+            threads without resulting in a non-base callout to host objects or to the 
+            IActiveScriptSite interface.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/xd9bt7sb(v=vs.94).aspx"/>
+            </summary>
+            <param name="state">Sets the scripting engine to the given state. 
+            Can be one of the values defined in the SCRIPTSTATE Enumeration enumeration.</param>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScript.GetScriptState">
+            <summary>
+            Retrieves the current state of the scripting engine. This method can be called from 
+            non-base threads without resulting in a non-base callout to host objects or to the 
+            IActiveScriptSite interface.
+            </summary>
+            <param name="state">Address of a variable that receives a value defined in the 
+            SCRIPTSTATE Enumeration enumeration. The value indicates the current state of the 
+            scripting engine associated with the calling thread.</param>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScript.Close">
+            <summary>
+            Causes the scripting engine to abandon any currently loaded script, lose its state, 
+            and release any interface pointers it has to other objects, thus entering a closed state.
+            Event sinks, immediately executed script text, and macro invocations that are already 
+            in progress are completed before the state changes (use IActiveScript::InterruptScriptThread
+            to cancel a running script thread). This method must be called by the creating host before
+            the interface is released to prevent circular reference problems.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/6fds63c9(v=vs.94).aspx"/>
+            </summary>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScript.AddNamedItem(System.String,Interop.ActiveXScript.ScriptItemFlags)">
+            <summary>
+            Adds the name of a root-level item to the scripting engine's name space. 
+            A root-level item is an object with properties and methods, an event source, or all three.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/s8eyc3sh(v=vs.94).aspx"/>
+            </summary>
+            <param name="name">Address of a buffer that contains the name of the item as viewed 
+            from the script. The name must be unique and persistable.</param>
+            <param name="flags">Flags associated with an item. Can be a combination of these values</param>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScript.AddTypeLib(System.Guid@,System.UInt32,System.UInt32,Interop.ActiveXScript.ScriptTypeLibFlags)">
+            <summary>
+            Adds a type library to the name space for the script. This is similar to the #include 
+            directive in C/C++. It allows a set of predefined items such as class definitions, 
+            typedefs, and named constants to be added to the run-time environment available to the script.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/4hb95zwx(v=vs.94).aspx"/>
+            </summary>
+            <param name="libid">CLSID of the type library to add.</param>
+            <param name="major">Major version number.</param>
+            <param name="minor">Minor version number.</param>
+            <param name="flags">Option flags.</param>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScript.GetScriptDispatch(System.String)">
+            <summary>
+            Retrieves the IDispatch interface for the methods and properties associated with the
+            currently running script.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/c5b043ew(v=vs.94).aspx"/>
+            </summary>
+            <remarks>Because methods and properties can be added by calling the IActiveScriptParse interface,
+            the IDispatch interface returned by this method can dynamically support new methods and properties.
+            Similarly, the IDispatch::GetTypeInfo method should return a new, unique ITypeInfo
+            interface when methods and properties are added. Note, however, that language engines must
+            not change the IDispatch interface in a way that is incompatible with any previous 
+            ITypeInfo interface returned. That implies, for example, that DISPIDs will never be reused.</remarks>
+            <param name="itemName">Address of a buffer that contains the name of the item for which
+            the caller needs the associated dispatch object. If this parameter is NULL, the dispatch
+            object contains as its members all of the global methods and properties defined by the script.
+            Through the IDispatch interface and the associated ITypeInfo interface, the host can 
+            invoke script methods or view and modify script variables.</param>
+            <returns>The object associated with the script's global methods and properties. 
+            If the scripting engine does not support such an object, NULL is returned.</returns>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScript.GetCurrentScriptThreadID">
+            <summary>
+            Retrieves a scripting-engine-defined identifier for the currently executing thread. 
+            The identifier can be used in subsequent calls to script thread execution-control methods
+            such as the IActiveScript::InterruptScriptThread method.
+            This method can be called from non-base threads without resulting in a non-base callout
+            to host objects or to the IActiveScriptSite interface.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/7weths74(v=vs.94).aspx"/>
+            </summary>
+            <returns>The script thread identifier associated with the current thread. 
+            The interpretation of this identifier is left to the scripting engine, but it can be 
+            just a copy of the Windows thread identifier. If the Win32 thread terminates, 
+            this identifier becomes unassigned and can subsequently be assigned to another thread.</returns>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScript.GetScriptThreadID(System.UInt32)">
+            <summary>
+            Retrieves a scripting-engine-defined identifier for the thread associated with the given Win32 thread.
+            The retrieved identifier can be used in subsequent calls to script thread execution 
+            control methods such as the IActiveScript::InterruptScriptThread method. This method
+            can be called from non-base threads without resulting in a non-base callout to host 
+            objects or to the IActiveScript::InterruptScriptThread interface.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/z5643a60(v=vs.94).aspx"/>
+            </summary>
+            <param name="win32ThreadID">Thread identifier of a running Win32 thread in the current process.
+            Use the IActiveScript::GetCurrentScriptThreadID function to retrieve the thread identifier
+            of the currently executing thread.</param>
+            <returns>The script thread identifier associated with the given Win32 thread. 
+            The interpretation of this identifier is left to the scripting engine, 
+            but it can be just a copy of the Windows thread identifier. 
+            Note that if the Win32 thread terminates, this identifier becomes unassigned and may 
+            subsequently be assigned to another thread.</returns>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScript.GetScriptThreadState(System.UInt32)">
+            <summary>
+            Retrieves the current state of a script thread.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/6a6kx7bd(v=vs.94).aspx"/>
+            </summary>
+            <remarks>This method can be called from non-base threads without resulting in a non-base
+            callout to host objects or to the IActiveScriptSite interface.</remarks>
+            <param name="scriptThreadID">Identifier of the thread for which the state is desired, 
+            or one of the following special thread identifiers:
+            SCRIPTTHREADID_BASE
+            The base thread; that is, the thread in which the scripting engine was instantiated.
+            SCRIPTTHREADID_CURRENT
+            The currently executing thread.</param>
+            <returns>The state of the indicated thread.
+            The state is indicated by one of the named constant values defined by the SCRIPTTHREADSTATE
+            Enumeration enumeration. If this parameter does not identify the current thread, 
+            the state may change at any time.</returns>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScript.InterruptScriptThread(System.UInt32,System.Runtime.InteropServices.ComTypes.EXCEPINFO@,Interop.ActiveXScript.ScriptInterruptFlags)">
+            <summary>
+            Interrupts the execution of a running script thread (an event sink, an immediate execution,
+            or a macro invocation). This method can be used to terminate a script that is stuck 
+            (for example, in an infinite loop). It can be called from non-base threads without 
+            resulting in a non-base callout to host objects or to the IActiveScriptSite method.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/ecadx4td(v=vs.94).aspx"/>
+            </summary>
+            <param name="scriptThreadID">Identifier of the thread to interrupt, or one of the following
+            special thread identifier values:
+            SCRIPTTHREADID_ALL
+            All threads. The interrupt is applied to all script methods currently in progress. 
+            Note that unless the caller has requested that the script be disconnected, the next scripted event causes script code to run again by calling the IActiveScript::SetScriptState method with the SCRIPTSTATE_DISCONNECTED or SCRIPTSTATE_INITIALIZED flag set.
+            SCRIPTTHREADID_BASE
+            The base thread; that is, the thread in which the scripting engine was instantiated.
+            SCRIPTTHREADID_CURRENT
+            The currently executing thread.</param>
+            <param name="excepInfo">Address of an EXCEPINFO structure containing the error information
+            that should be reported to the aborted script.</param>
+            <param name="flags">Option flags associated with the interruption.</param>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScript.Clone">
+            <summary>
+            Clones the current scripting engine (minus any current execution state), returning a loaded
+            scripting engine that has no site in the current thread. The properties of this new scripting
+            engine will be identical to the properties the original scripting engine would be in if
+            it were transitioned back to the initialized state.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/t4f5c129(v=vs.94).aspx"/>
+            </summary>
+            <remarks>The IActiveScript::Clone method is an optimization of IPersist*::Save, 
+            CoCreateInstance, and IPersist*::Load, so the state of the new scripting engine should 
+            be the same as if the state of the original scripting engine were saved and loaded into
+            a new scripting engine. Named items are duplicated in the cloned scripting engine, 
+            but specific object pointers for each item are forgotten and are obtained with the 
+            IActiveScriptSite::GetItemInfo method. This allows an identical object model with per-thread
+            entry points (an apartment model) to be used. This method is used for multithreaded server
+            hosts that can run multiple instances of the same script. The scripting engine may return
+            E_NOTIMPL, in which case the host can achieve the same result by duplicating the persistent
+            state and creating a new instance of the scripting engine with an IPersist* interface.
+            This method can be called from non-base threads without resulting in a non-base callout
+            to host objects or to the IActiveScriptSite interface.</remarks>
+            <returns>The IActiveScript interface of the cloned scripting engine. 
+            The host must create a site and call the IActiveScript::SetScriptSite method on the
+            new scripting engine before it will be in the initialized state and, therefore, usable.</returns>
+        </member>
+        <member name="T:Interop.ActiveXScript.IActiveScriptError">
+            <summary>
+            An object implementing this interface is passed to the IActiveScriptSite::OnScriptError 
+            method whenever the scripting engine encounters an unhandled error. The host then calls
+            methods on this object to obtain information about the error that occurred.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/b17d71fw(v=vs.94).aspx"/>
+            </summary>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptError.GetExceptionInfo">
+            <summary>
+            Retrieves information about an error that occurred while the scripting engine was running a script.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/0fdy4f25(v=vs.94).aspx"/>
+            </summary>
+            <returns>An EXCEPINFO structure that receives error information.</returns>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptError.GetSourcePosition(System.UInt32@,System.UInt32@,System.Int32@)">
+            <summary>
+            Retrieves the location in the source code where an error occurred while the scripting 
+            engine was running a script.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/xdf7c475(v=vs.94).aspx"/>
+            </summary>
+            <param name="sourceContext">Address of a variable that receives a cookie that identifies
+            the context. The interpretation of this parameter depends on the host application.</param>
+            <param name="lineNumber">Address of a variable that receives the line number in the 
+            source file where the error occurred.</param>
+            <param name="position">Address of a variable that receives the character position 
+            in the line where the error occurred.</param>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptError.GetSourceLineText">
+            <summary>
+            Retrieves the line in the source file where an error occurred while a scripting engine 
+            was running a script.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/dwy967hz(v=vs.94).aspx"/>
+            </summary>
+            <returns>The line of source code in which the error occurred.</returns>
+        </member>
+        <member name="T:Interop.ActiveXScript.IActiveScriptError64">
+            <summary>
+            An object implementing this interface is passed to the IActiveScriptSite::OnScriptError 
+            method whenever the scripting engine encounters an unhandled error. The host then calls
+            methods on this object to obtain information about the error that occurred.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/b17d71fw(v=vs.94).aspx"/>
+            </summary>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptError64.GetSourcePosition64(System.UInt64@,System.UInt32@,System.Int32@)">
+            <summary>
+            Retrieves the location in the source code where an error occurred while the scripting 
+            engine was running a script.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/xdf7c475(v=vs.94).aspx"/>
+            </summary>
+            <param name="sourceContext">Address of a variable that receives a cookie that identifies
+            the context. The interpretation of this parameter depends on the host application.</param>
+            <param name="lineNumber">Address of a variable that receives the line number in the 
+            source file where the error occurred.</param>
+            <param name="position">Address of a variable that receives the character position 
+            in the line where the error occurred.</param>
+        </member>
+        <member name="T:Interop.ActiveXScript.IActiveScriptGarbageCollector">
+            <summary>
+            Provides a method to start garbage collection. 
+            This interface should be implemented by Active Script engines that want to clean up their resources.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/hh769816(v=vs.94).aspx"/>
+            </summary>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptGarbageCollector.CollectGarbage(Interop.ActiveXScript.ScriptGCType)">
+            <summary>
+            The Active Script host calls this method to start garbage collection.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/hh769822(v=vs.94).aspx"/>
+            </summary>
+            <param name="type">The SCRIPTGCTYPE Enumeration that specifies whether to do normal
+            or exhaustive garbage collection.</param>
+        </member>
+        <member name="T:Interop.ActiveXScript.IActiveScriptParse32">
+            <summary>
+            If the Windows Script engine allows raw text code scriptlets to be added to the script or 
+            allows expression text to be evaluated at run time, it implements the IActiveScriptParse interface.
+            For interpreted scripting languages that have no independent authoring environment, 
+            such as VBScript, this provides an alternate mechanism (other than IPersist*) to get script
+            code into the scripting engine, and to attach script fragments to various object events.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/f2822wbt(v=vs.94).aspx"/>
+            </summary>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptParse32.InitNew">
+            <summary>
+            Initializes the scripting engine.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/5z520akb(v=vs.94).aspx"/>
+            </summary>
+            <remarks>Before the scripting engine can be used, one of the following methods must be 
+            called: IPersist*::Load, IPersist*::InitNew, or IActiveScriptParse::InitNew. 
+            The semantics of this method are identical to IPersistStreamInit::InitNew, in that this
+            method tells the scripting engine to initialize itself. Note that it is not valid to call
+            both IPersist*::InitNew or IActiveScriptParse::InitNew and IPersist*::Load, nor is it 
+            valid to call IPersist*::InitNew, IActiveScriptParse::InitNew, or IPersist*::Load more
+            than once.</remarks>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptParse32.AddScriptlet(System.String,System.String,System.String,System.String,System.String,System.String,System.UInt32,System.UInt32,Interop.ActiveXScript.ScriptTextFlags,System.String@,System.Runtime.InteropServices.ComTypes.EXCEPINFO@)">
+            <summary>
+            Adds a code scriptlet to the script. This method is used in environments where the persistent
+            state of the script is intertwined with the host document and the host is responsible 
+            for restoring the script, rather than through an IPersist* interface. 
+            The primary examples are HTML scripting languages that allow scriptlets of code embedded
+            in the HTML document to be attached to intrinsic events 
+            (for instance, ONCLICK="button1.text='Exit'").
+            <see cref="!:http://msdn.microsoft.com/en-us/library/80dz62xx(v=vs.94).aspx"/>
+            </summary>
+            <param name="defaultName">Address of a default name to associate with the scriptlet. 
+            If the scriptlet does not contain naming information (as in the ONCLICK example above),
+            this name will be used to identify the scriptlet. 
+            If this parameter is NULL, the scripting engine manufactures a unique name, if necessary.</param>
+            <param name="code">Address of the scriptlet text to add. The interpretation of this 
+            string depends on the scripting language.</param>
+            <param name="itemName">Address of a buffer that contains the item name associated with 
+            this scriptlet. This parameter, in addition to pstrSubItemName, identifies the object
+            for which the scriptlet is an event handler.</param>
+            <param name="subItemName">Address of a buffer that contains the name of a subobject of 
+            the named item with which this scriptlet is associated; this name must be found in the 
+            named item's type information. This parameter is NULL if the scriptlet is to be associated
+            with the named item instead of a subitem. This parameter, in addition to pstrItemName, 
+            identifies the specific object for which the scriptlet is an event handler.</param>
+            <param name="eventName">Address of a buffer that contains the name of the event for 
+            which the scriptlet is an event handler.</param>
+            <param name="delimiter">Address of the end-of-scriptlet delimiter. When the pstrCode parameter
+            is parsed from a stream of text, the host typically uses a delimiter, such as two single
+            4quotation marks (''), to detect the end of the scriptlet. This parameter specifies the
+            delimiter that the host used, allowing the scripting engine to provide some conditional
+            primitive preprocessing (for example, replacing a single quotation mark ['] with two
+            single quotation marks for use as a delimiter). Exactly how (and if) the scripting engine
+            makes use of this information depends on the scripting engine. Set this parameter to NULL
+            if the host did not use a delimiter to mark the end of the scriptlet.</param>
+            <param name="sourceContext">Application-defined value that is used for debugging purposes.</param>
+            <param name="startingLineNumber">Zero-based value that specifies which line the parsing will begin at.</param>
+            <param name="flags">Flags associated with the scriptlet.</param>
+            <param name="name">Actual name used to identify the scriptlet. This is to be in order 
+            of preference: a name explicitly specified in the scriptlet text, the default name provided
+            in pstrDefaultName, or a unique name synthesized by the scripting engine.</param>
+            <param name="excepInfo">Address of a structure containing exception information. 
+            This structure should be filled in if DISP_E_EXCEPTION is returned.</param>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptParse32.ParseScriptText(System.String,System.String,System.Object,System.String,System.UInt32,System.UInt32,Interop.ActiveXScript.ScriptTextFlags,System.IntPtr,System.Runtime.InteropServices.ComTypes.EXCEPINFO@)">
+            <summary>
+            Parses the given code scriptlet, adding declarations into the namespace and evaluating 
+            code as appropriate.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/tch4w30x(v=vs.94).aspx"/>
+            </summary>
+            <remarks>If the scripting engine is in the initialized state, no code will actually be 
+            evaluated during this call; rather, such code is queued and executed when the scripting
+            engine is transitioned into (or through) the started state. Because execution is not
+            allowed in the initialized state, it is an error to call this method with the 
+            SCRIPTTEXT_ISEXPRESSION flag when in the initialized state. The scriptlet can be an 
+            expression, a list of statements, or anything allowed by the script language. 
+            For example, this method is used in the evaluation of the HTML &lt;SCRIPT&gt; tag, which allows
+            statements to be executed as the HTML page is being constructed, rather than just compiling
+            them into the script state. The code passed to this method must be a valid, complete portion
+            of code. For example, in VBScript it is illegal to call this method once with Sub Function(x)
+            and then a second time with End Sub. The parser must not wait for the second call to complete
+            the subroutine, but rather must generate a parse error because a subroutine declaration
+            was started but not completed. 
+            For more information about script states, see the Script Engine States section of 
+            Windows Script Engines.</remarks>
+            <param name="code">Address of the scriptlet text to evaluate. 
+            The interpretation of this string depends on the scripting language.</param>
+            <param name="itemName">Address of the item name that gives the context in which the 
+            scriptlet is to be evaluated. If this parameter is NULL, 
+            the code is evaluated in the scripting engine's global context.</param>
+            <param name="context">Address of the context object. This object is reserved for use in
+            a debugging environment, where such a context may be provided by the debugger to represent
+            an active run-time context. If this parameter is NULL, the engine uses pstrItemName to
+            identify the context.</param>
+            <param name="delimiter">Address of the end-of-scriptlet delimiter. When pstrCode is parsed
+            from a stream of text, the host typically uses a delimiter, such as two single quotation
+            marks (''), to detect the end of the scriptlet. This parameter specifies the delimiter 
+            that the host used, allowing the scripting engine to provide some conditional primitive
+            preprocessing (for example, replacing a single quotation mark ['] with two single 
+            quotation marks for use as a delimiter). Exactly how (and if) the scripting engine makes
+            use of this information depends on the scripting engine. Set this parameter to NULL if
+            the host did not use a delimiter to mark the end of the scriptlet.</param>
+            <param name="sourceContext">Cookie used for debugging purposes.</param>
+            <param name="startingLineNumber">Zero-based value that specifies which line the parsing 
+            will begin at.</param>
+            <param name="flags">Flags associated with the scriptlet.</param>
+            <param name="pVarResult">Address of a buffer that receives the results of scriptlet 
+            processing, or NULL if the caller expects no result 
+            (that is, the SCRIPTTEXT_ISEXPRESSION value is not set).</param>
+            <param name="excepInfo">Address of a structure that receives exception information.
+            This structure is filled if IActiveScriptParse::ParseScriptText returns DISP_E_EXCEPTION.</param>
+        </member>
+        <member name="T:Interop.ActiveXScript.IActiveScriptParse64">
+            <summary>
+            If the Windows Script engine allows raw text code scriptlets to be added to the script or 
+            allows expression text to be evaluated at run time, it implements the IActiveScriptParse interface.
+            For interpreted scripting languages that have no independent authoring environment, 
+            such as VBScript, this provides an alternate mechanism (other than IPersist*) to get script
+            code into the scripting engine, and to attach script fragments to various object events.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/f2822wbt(v=vs.94).aspx"/>
+            </summary>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptParse64.InitNew">
+            <summary>
+            Initializes the scripting engine.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/5z520akb(v=vs.94).aspx"/>
+            </summary>
+            <remarks>Before the scripting engine can be used, one of the following methods must be 
+            called: IPersist*::Load, IPersist*::InitNew, or IActiveScriptParse::InitNew. 
+            The semantics of this method are identical to IPersistStreamInit::InitNew, in that this
+            method tells the scripting engine to initialize itself. Note that it is not valid to call
+            both IPersist*::InitNew or IActiveScriptParse::InitNew and IPersist*::Load, nor is it 
+            valid to call IPersist*::InitNew, IActiveScriptParse::InitNew, or IPersist*::Load more
+            than once.</remarks>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptParse64.AddScriptlet(System.String,System.String,System.String,System.String,System.String,System.String,System.UInt64,System.UInt32,Interop.ActiveXScript.ScriptTextFlags,System.String@,System.Runtime.InteropServices.ComTypes.EXCEPINFO@)">
+            <summary>
+            Adds a code scriptlet to the script. This method is used in environments where the persistent
+            state of the script is intertwined with the host document and the host is responsible 
+            for restoring the script, rather than through an IPersist* interface. 
+            The primary examples are HTML scripting languages that allow scriptlets of code embedded
+            in the HTML document to be attached to intrinsic events 
+            (for instance, ONCLICK="button1.text='Exit'").
+            <see cref="!:http://msdn.microsoft.com/en-us/library/80dz62xx(v=vs.94).aspx"/>
+            </summary>
+            <param name="defaultName">Address of a default name to associate with the scriptlet. 
+            If the scriptlet does not contain naming information (as in the ONCLICK example above),
+            this name will be used to identify the scriptlet. 
+            If this parameter is NULL, the scripting engine manufactures a unique name, if necessary.</param>
+            <param name="code">Address of the scriptlet text to add. The interpretation of this 
+            string depends on the scripting language.</param>
+            <param name="itemName">Address of a buffer that contains the item name associated with 
+            this scriptlet. This parameter, in addition to pstrSubItemName, identifies the object
+            for which the scriptlet is an event handler.</param>
+            <param name="subItemName">Address of a buffer that contains the name of a subobject of 
+            the named item with which this scriptlet is associated; this name must be found in the 
+            named item's type information. This parameter is NULL if the scriptlet is to be associated
+            with the named item instead of a subitem. This parameter, in addition to pstrItemName, 
+            identifies the specific object for which the scriptlet is an event handler.</param>
+            <param name="eventName">Address of a buffer that contains the name of the event for 
+            which the scriptlet is an event handler.</param>
+            <param name="delimiter">Address of the end-of-scriptlet delimiter. When the pstrCode parameter
+            is parsed from a stream of text, the host typically uses a delimiter, such as two single
+            4quotation marks (''), to detect the end of the scriptlet. This parameter specifies the
+            delimiter that the host used, allowing the scripting engine to provide some conditional
+            primitive preprocessing (for example, replacing a single quotation mark ['] with two
+            single quotation marks for use as a delimiter). Exactly how (and if) the scripting engine
+            makes use of this information depends on the scripting engine. Set this parameter to NULL
+            if the host did not use a delimiter to mark the end of the scriptlet.</param>
+            <param name="sourceContext">Application-defined value that is used for debugging purposes.</param>
+            <param name="startingLineNumber">Zero-based value that specifies which line the parsing will begin at.</param>
+            <param name="flags">Flags associated with the scriptlet.</param>
+            <param name="name">Actual name used to identify the scriptlet. This is to be in order 
+            of preference: a name explicitly specified in the scriptlet text, the default name provided
+            in pstrDefaultName, or a unique name synthesized by the scripting engine.</param>
+            <param name="excepInfo">Address of a structure containing exception information. 
+            This structure should be filled in if DISP_E_EXCEPTION is returned.</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Interop.ActiveXScript.IActiveScriptParse64.ParseScriptText(System.String,System.String,System.Object,System.String,System.UInt64,System.UInt32,Interop.ActiveXScript.ScriptTextFlags,System.IntPtr,System.Runtime.InteropServices.ComTypes.EXCEPINFO@)" -->
+        <member name="T:Interop.ActiveXScript.IActiveScriptSite">
+            <summary>
+            Implemented by the host to create a site for the Windows Script engine. 
+            Usually, this site will be associated with the container of all the objects that are visible
+            to the script (for example, the ActiveX Controls). Typically, this container will correspond
+            to the document or page being viewed. Microsoft Internet Explorer, for example, would create
+            such a container for each HTML page being displayed. Each ActiveX control (or other automation object)
+            on the page, and the scripting engine itself, would be enumerable within this container.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/z70w3w6a(v=vs.94).aspx"/>
+            </summary>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptSite.GetLCID">
+            <summary>
+            Retrieves the locale identifier associated with the host's user interface. 
+            The scripting engine uses the identifier to ensure that error strings and other 
+            user-interface elements generated by the engine appear in the appropriate language.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/4xkx4eyw(v=vs.94).aspx"/>
+            </summary>
+            <param name="lcid">Address of a variable that receives the locale identifier for 
+            user-interface elements displayed by the scripting engine.</param>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptSite.GetItemInfo(System.String,Interop.ActiveXScript.ScriptInfoFlags,System.IntPtr@,System.IntPtr@)">
+            <summary>
+            Allows the scripting engine to obtain information about an item added with the IActiveScript::AddNamedItem method.
+            This method retrieves only the information indicated by the dwReturnMask parameter; 
+            this improves performance. For example, if an ITypeInfo interface is not needed for an item, 
+            it is simply not specified in dwReturnMask.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/442d1dx8(v=vs.94).aspx"/>
+            </summary>
+            <param name="name">The name associated with the item, as specified in the IActiveScript::AddNamedItem method.</param>
+            <param name="mask">A bit mask specifying what information about the item should be returned.
+            The scripting engine should request the minimum amount of information possible because 
+            some of the return parameters (for example, ITypeInfo) can take considerable time to load or generate.</param>
+            <param name="pUnkItem">Address of a variable that receives a pointer to the IUnknown 
+            interface associated with the given item. The scripting engine can use the 
+            IUnknown::QueryInterface method to obtain the IDispatch interface for the item. 
+            This parameter receives NULL if dwReturnMask does not include the SCRIPTINFO_IUNKNOWN value.
+            Also, it receives NULL if there is no object associated with the item name; 
+            this mechanism is used to create a simple class when the named item was added with the 
+            SCRIPTITEM_CODEONLY flag set in the IActiveScript::AddNamedItem method.</param>
+            <param name="pTypeInfo">Address of a variable that receives a pointer to the ITypeInfo 
+            interface associated with the item. This parameter receives NULL if dwReturnMask does 
+            not include the SCRIPTINFO_ITYPEINFO value, or if type information is not available for
+            this item. If type information is not available, the object cannot source events, and 
+            name binding must be realized with the IDispatch::GetIDsOfNames method. Note that the 
+            ITypeInfo interface retrieved describes the item's coclass (TKIND_COCLASS) because the 
+            object may support multiple interfaces and event interfaces. If the item supports the 
+            IProvideMultipleTypeInfo interface, the ITypeInfo interface retrieved is the same as the
+            index zero ITypeInfo that would be obtained using the IProvideMultipleTypeInfo::GetInfoOfIndex method.</param>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptSite.GetDocVersionString">
+            <summary>
+            Retrieves a host-defined string that uniquely identifies the current document version. 
+            If the related document has changed outside the scope of Windows Script 
+            (as in the case of an HTML page being edited with Notepad), the scripting engine can 
+            save this along with its persisted state, forcing a recompile the next time the script is loaded.
+            If E_NOTIMPL is returned, the scripting engine should assume that the script is in sync with the document.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/a80a8e1d(v=vs.94).aspx"/>
+            </summary>
+            <returns>The host-defined document version string.</returns>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptSite.OnScriptTerminate(System.IntPtr,System.Runtime.InteropServices.ComTypes.EXCEPINFO@)">
+            <summary>
+            Informs the host that the script has completed execution.
+            The scripting engine calls this method before the call to the IActiveScriptSite::OnStateChange 
+            method, with the SCRIPTSTATE_INITIALIZED flag set, is completed. This method can be used 
+            to return completion status and results to the host. Note that many script languages,
+            which are based on sinking events from the host, have life spans that are defined by the host. 
+            In this case, this method may never be called.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/03w8sd4a(v=vs.94).aspx"/>
+            </summary>
+            <param name="pVarResult">Address of a variable that contains the script result, 
+            or NULL if the script produced no result.</param>
+            <param name="excepInfo">Address of an EXCEPINFO structure that contains exception 
+            information generated when the script terminated, or NULL if no exception was generated.</param>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptSite.OnStateChange(Interop.ActiveXScript.ScriptState)">
+            <summary>
+            Informs the host that the scripting engine has changed states.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/bd7cy77w(v=vs.94).aspx"/>
+            </summary>
+            <param name="state">Value that indicates the new script state. 
+            See the IActiveScript::GetScriptState method for a description of the states.</param>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptSite.OnScriptError(Interop.ActiveXScript.IActiveScriptError)">
+            <summary>
+            Informs the host that an execution error occurred while the engine was running the script.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/shbz8x82(v=vs.94).aspx"/>
+            </summary>
+            <param name="error">Address of the error object's IActiveScriptError interface. 
+            A host can use this interface to obtain information about the execution error.</param>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptSite.OnEnterScript">
+            <summary>
+            Informs the host that the scripting engine has begun executing the script code.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/9c1cww48(v=vs.94).aspx"/>
+            </summary>
+            <remarks>The scripting engine must call this method on every entry or reentry into the 
+            scripting engine. For example, if the script calls an object that then fires an event 
+            handled by the scripting engine, the scripting engine must call IActiveScriptSite::OnEnterScript
+            before executing the event, and must call the IActiveScriptSite::OnLeaveScript method 
+            after executing the event but before returning to the object that fired the event. 
+            Calls to this method can be nested. Every call to this method requires a corresponding 
+            call to IActiveScriptSite::OnLeaveScript.</remarks>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptSite.OnLeaveScript">
+            <summary>
+            Informs the host that the scripting engine has returned from executing script code.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/ebahs1kk(v=vs.94).aspx"/>
+            </summary>
+            <remarks>The scripting engine must call this method before returning control to a calling
+            application that entered the scripting engine. For example, if the script calls an object
+            that then fires an event handled by the scripting engine, the scripting engine must call
+            the IActiveScriptSite::OnEnterScript method before executing the event, and must call 
+            IActiveScriptSite::OnLeaveScript after executing the event before returning to the object
+            that fired the event. Calls to this method can be nested. Every call to 
+            IActiveScriptSite::OnEnterScript requires a corresponding call to this method.</remarks>
+        </member>
+        <member name="T:Interop.ActiveXScript.IActiveScriptSiteInterruptPoll">
+            <summary>
+            The IActiveScriptSiteInterruptPoll interface allows a host to specify that a script should terminate.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/sc7h6s9s(v=vs.94).aspx"/>
+            </summary>
+        </member>
+        <member name="M:Interop.ActiveXScript.IActiveScriptSiteInterruptPoll.QueryContinue">
+            <summary>
+            Allows a host to specify that a script should terminate.
+            <see cref="!:http://msdn.microsoft.com/en-us/library/839hsy0d(v=vs.94).aspx"/>
+            </summary>
+            <remarks>The hosted script should terminate unless the return value of the QueryContinue 
+            method is S_OK. A return value of S_FALSE indicates that the host explicitly requests 
+            that the script terminate. A multithreaded host may use the 
+            IActiveScript::InterruptScriptThread method to terminate a script.</remarks>
+            <returns>The method returns an HRESULT. Possible values include, 
+            but are not limited to, those in the following table.
+            S_OK 
+            The call succeeded and the host permits the script to continue running.
+            S_FALSE
+            The call succeeded and the host requests that the script terminate.</returns>
+        </member>
+    </members>
+</doc>

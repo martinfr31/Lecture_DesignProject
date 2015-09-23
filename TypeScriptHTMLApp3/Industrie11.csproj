@@ -878,6 +878,9 @@
     <TypeScriptCompile Include="Module\ChartModul\Service\ChartService.ts" />
     <TypeScriptCompile Include="Module\ChartModul\Service\EnergyService.ts" />
     <TypeScriptCompile Include="App\Service\HttpHandlerService.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\d3\d3.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\d3\plugins\d3.superformula.d.ts" />
     <TypeScriptCompile Include="Scripts\_app.ts" />
   </ItemGroup>
   <ItemGroup>
@@ -899,7 +902,20 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="ActiveXScriptLib, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ActiveScriptEngine.1.1.0.0\lib\net20\ActiveXScriptLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ActiveXScriptLib.Extensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ActiveScriptEngine.Extensions.1.0.0.0\lib\net40\ActiveXScriptLib.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Interop.ActiveXScript, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ActiveScriptEngine.1.1.0.0\lib\net20\Interop.ActiveXScript.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>

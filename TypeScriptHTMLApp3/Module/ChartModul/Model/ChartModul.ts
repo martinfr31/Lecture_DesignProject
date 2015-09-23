@@ -1,8 +1,8 @@
 ﻿/// <reference path="../../../Scripts/_app.ts" />
 module Chart {
     export interface IChartModel {
-        power: number;
-        hour: string;
+        name: string;
+        children: Array<string>;
 
         /*ProdID: number;
         name: string;

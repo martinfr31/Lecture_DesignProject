@@ -1,5 +1,5 @@
 ﻿﻿<!DOCTYPE html>
-<html ng-app="app">
+<html>
 <head>
 	<meta charset="utf-8" />
 	<title>Industrie 11</title>
@@ -48,20 +48,20 @@ body {
 </head>
 <body class="skin-blue">
 	<script src="/Scripts/d3/d3.min.js"></script>
-	<div class="wrapper row-offcanvas row-offcanvas-left">
-		<div class="content">
-			<div class="row">
-				<h1>Industrie 11 - Lecture Design Praktikum</h1>
- 
-			   <div ng-controller="ChartController">
-					<chartwidget data="chartData" size="6"></chartwidget>
-				</div>
+    <div class="wrapper row-offcanvas row-offcanvas-left" ng-app="app">
+        <div class="content">
+            <div class="row">
+                <h1>Industrie 11 - Lecture Design Praktikum</h1>
 
-				<script src="Module/Process/Service/ProcessStepChart.js"></script>
+                <div ng-controller="ChartController">
+                    <chartwidget data="chartData" size="6"></chartwidget>
+                </div>
 
-			</div>            
-		</div>
-	</div>
+                <!--				<script src="Module/Process/Service/ProcessStepChart.js"></script>-->
+
+            </div>
+        </div>
+    </div>
 
 	<!--<div class="major-nav"  id="majornav">
 		major-nav

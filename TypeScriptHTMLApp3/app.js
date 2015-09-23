@@ -69,9 +69,8 @@ var Chart;
 
     var FirstChartWidget = (function () {
         function FirstChartWidget() {
-            this.templateUrl = "Module/Process/Views/Charts.html";
-
-            //this.templateUrl = "Module/Process/Views/firstenergywidget.html";
+            //this.templateUrl = "Module/Process/Views/Charts.html";
+            this.templateUrl = "Module/Process/Views/firstenergywidget.html";
             this.scope = {
                 data: "=",
                 size: "@"

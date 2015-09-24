@@ -81,6 +81,48 @@ var Chart;
 var Chart;
 (function (Chart) {
     'use strict';
+    var SecondChartWidget = (function () {
+        function SecondChartWidget() {
+            this.templateUrl = "Module/ChartModul/Views/secondchartwidget.html";
+            this.scope = {
+                data: "=",
+                size: "@"
+            };
+        }
+        SecondChartWidget.prototype.injection = function () {
+            return [
+                function () { return new SecondChartWidget(); }
+            ];
+        };
+        return SecondChartWidget;
+    })();
+    Chart.SecondChartWidget = SecondChartWidget;
+})(Chart || (Chart = {}));
+/// <reference path="../../../Scripts/_app.ts" />
+var Chart;
+(function (Chart) {
+    'use strict';
+    var ThirdChartWidget = (function () {
+        function ThirdChartWidget() {
+            this.templateUrl = "Module/ChartModul/Views/thirdchartwidget.html";
+            this.scope = {
+                data: "=",
+                size: "@"
+            };
+        }
+        ThirdChartWidget.prototype.injection = function () {
+            return [
+                function () { return new ThirdChartWidget(); }
+            ];
+        };
+        return ThirdChartWidget;
+    })();
+    Chart.ThirdChartWidget = ThirdChartWidget;
+})(Chart || (Chart = {}));
+/// <reference path="../../../Scripts/_app.ts" />
+var Chart;
+(function (Chart) {
+    'use strict';
     var ChartController = (function () {
         function ChartController($scope, serviceChart) {
             this.$scope = $scope;
@@ -103,6 +145,8 @@ var Chart;
 /// <reference path="../App/Service/HttpHandlerService.ts" /> 
 /// <reference path="../Module/ChartModul/Service/ChartService.ts" /> 
 /// <reference path="../Module/ChartModul/Directives/FirstChartWidget.ts" /> 
+/// <reference path="../Module/ChartModul/Directives/SecondChartWidget.ts" /> 
+/// <reference path="../Module/ChartModul/Directives/ThirdChartWidget.ts" /> 
 /// <reference path="../Module/ChartModul/Controller/ChartController.ts" /> 
 /// <reference path="../app.ts" />
 /// <reference path="Scripts/_app.ts" />
@@ -111,68 +155,10 @@ var App;
     'use strict';
     angular.module('app', [])
         .service('chartService', Chart.ChartService)
-        .directive('chartwidget', Chart.FirstChartWidget.prototype.injection())
+        .directive('chartwidget1', Chart.FirstChartWidget.prototype.injection())
+        .directive('chartwidget2', Chart.SecondChartWidget.prototype.injection())
+        .directive('chartwidget3', Chart.ThirdChartWidget.prototype.injection())
         .controller('ChartController', Chart.ChartController);
 })(App || (App = {}));
 /// <reference path="../../../Scripts/_app.ts" />
-var Chartx;
-(function (Chartx) {
-    'use strict';
-    var ChartController = (function () {
-        function ChartController($scope, serviceEnergy) {
-            this.$scope = $scope;
-            console.log("Energy Constructor started");
-            serviceEnergy.getData().then(function (data) { return $scope.energyData = data; });
-            setInterval(function () {
-                $scope.$apply(function () {
-                    serviceEnergy.getData().then(function (data) { return $scope.energyData = data; });
-                });
-            }, 1000);
-        }
-        ChartController.$inject = ['$scope', 'energyService'];
-        return ChartController;
-    })();
-    Chartx.ChartController = ChartController;
-})(Chartx || (Chartx = {}));
-/// <reference path="../../../Scripts/_app.ts" />
-var Chartx;
-(function (Chartx) {
-    'use strict';
-    var FirstEnergyWidget = (function () {
-        function FirstEnergyWidget() {
-            this.templateUrl = "Module/ChartModul/Views/firstenergywidget.html";
-            this.scope = {
-                data: "=",
-                size: "@"
-            };
-        }
-        FirstEnergyWidget.prototype.injection = function () {
-            return [
-                function () { return new FirstEnergyWidget(); }
-            ];
-        };
-        return FirstEnergyWidget;
-    })();
-    Chartx.FirstEnergyWidget = FirstEnergyWidget;
-})(Chartx || (Chartx = {}));
-/// <reference path="../../../Scripts/_app.ts" />
-/// <reference path="../../../Scripts/_app.ts" />
-/// <reference path="../../../Scripts/_app.ts" />
-var Chartx;
-(function (Chartx) {
-    var EnergyService = (function (_super) {
-        __extends(EnergyService, _super);
-        function EnergyService($http) {
-            this.handlerUrl = 'http://cloud.livinglab-energy.de/ProSeminar/SchnittstelleLive.php';
-            _super.call(this, $http);
-        }
-        EnergyService.prototype.getData = function () {
-            var config = {};
-            return this.useGetHandler(config);
-        };
-        EnergyService.$inject = ['$http'];
-        return EnergyService;
-    })(App.HttpHandlerService);
-    Chartx.EnergyService = EnergyService;
-})(Chartx || (Chartx = {}));
 //# sourceMappingURL=app.js.map

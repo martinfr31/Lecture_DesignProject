@@ -43,6 +43,10 @@
     d3.json("chart1_demo_testdaten2.txt", function (error, root) {
 
 
+        function weiterleitung(parm) {
+            window.location = "./index.html?Key=" + parm; //Weiterleitung
+        }
+
         // Compute the initial layout on the entire tree to sum sizes.
         // Also compute the full name and fill color for each node,
         // and stash the children so they can be restored as we descend.
@@ -81,10 +85,9 @@
             .on("click", zoomIn);
 
 
-        alert("test");
-
-
         function zoomIn(p) {
+            weiterleitung(p.key);
+           
             if (p.depth > 1) p = p.parent;
             if (!p.children) return;
             zoom(p, p);

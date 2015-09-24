@@ -2,10 +2,10 @@
 module Chart {
     'use strict';
 
-    export class FirstChartWidget implements ng.IDirective {
+    export class ThirdChartWidget implements ng.IDirective {
         public injection(): Array<any> {
             return [
-                () => { return new FirstChartWidget() }
+                () => { return new ThirdChartWidget() }
             ]
         }
 
@@ -14,7 +14,7 @@ module Chart {
 
         public link;
         constructor() {
-            this.templateUrl = "Module/ChartModul/Views/firstchartwidget.html";
+            this.templateUrl = "Module/ChartModul/Views/thirdchartwidget.html";
             this.scope = {
                 data: "=",
                 size: "@"

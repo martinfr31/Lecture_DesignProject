@@ -1,0 +1,33 @@
+﻿<script src="Scripts/d3/d3.js"></script>
+<script src="Module/ChartModul/Model/Chart2.js"></script>
+
+<section class="col-md-{{size}}">
+
+    <!--<div class="box box-primary direct-chat direct-chat-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Chart2</h3>
+        </div>
+        <div class="box-body">
+            <h1 style="padding-right:20px;font-size:40pt">{{data[0].name}} W</h1>
+        </div>
+        <div class="box-footer">
+
+        </div>
+    </div>-->
+    <h1>Chart2</h1>
+    <form>
+        <input type="text" id="jData" value="{{data}}">
+    </form>
+
+    <script>
+
+        function myTimer() {
+            d = document.getElementById("jData").value
+            Chart2(d);
+        }
+        setTimeout(myTimer, 500);
+    </script>
+
+
+
+</section>

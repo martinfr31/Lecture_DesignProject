@@ -6,6 +6,8 @@
 /// <reference path="../App/Service/HttpHandlerService.ts" /> 
 /// <reference path="../Module/ChartModul/Service/ChartService.ts" /> 
 /// <reference path="../Module/ChartModul/Directives/FirstChartWidget.ts" /> 
+/// <reference path="../Module/ChartModul/Directives/SecondChartWidget.ts" /> 
+/// <reference path="../Module/ChartModul/Directives/ThirdChartWidget.ts" /> 
 /// <reference path="../Module/ChartModul/Controller/ChartController.ts" /> 
 /// <reference path="../app.ts" />
 

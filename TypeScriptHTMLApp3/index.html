@@ -3,7 +3,7 @@
 <html ng-app="app">
 <head>
     <meta charset="utf-8" />
-    <title>Energy-Dashboard</title>
+    <title>Industrie 11</title>
     <link href="Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="Content/app.css" rel="stylesheet" type="text/css" />
     <style>
@@ -16,6 +16,36 @@
             fill: none;
             pointer-events: all;
         }
+
+
+body {
+	font: 10px sans-serif;
+}
+
+.bar rect {
+	fill: steelblue;
+	shape-rendering: crispEdges;
+}
+
+.bar text {
+	fill: #fff;
+}
+
+.axis path, .axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: steelblue;
+}
+
+.x.axis path {
+  display: none;
+}
+
+
     </style>
 </head>
 
@@ -24,16 +54,41 @@
         <div class="content">
             <div class="row">
 
-
-
-                <div ng-controller="ChartController">
-                    <chartwidget data="chartData" size="6"></chartwidget>
+                <div ng-controller="ChartController" id="Chart">
+                    <chartwidget1 data="chartData" size="6"></chartwidget1>
                 </div>
                 
-
             </div>
         </div>
     </div>
+    <script>
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+        var parm = getParameterByName('Key');
+        if (parm != "")
+        {
+            var res = parm.split(".");
+            switch(res.length) {
+                case 1:
+                    document.getElementById('Chart').innerHTML = '<chartwidget2 data="chartData" size="6"></chartwidget2>';
+                    //window.location = "./index.html?Key=" + parm;
+                    break;
+                case 2:
+                    document.getElementById('Chart').innerHTML = '<chartwidget3 data="chartData" size="6"></chartwidget3>';
+                    //window.location = "./index.html?Key=" + parm;
+                    break;
+                default:
+                    alert("Diagramm noch nicht definiert!");
+                } 
+        } else {
+           // document.getElementById('Chart').innerHTML = '<chartwidget1 data="chartData" size="6"></chartwidget1>';
+        }
+
+    </script>
 
     <script src="Scripts/jquery-1.11.2.min.js"></script>
     <script src="Scripts/angular.js"></script>

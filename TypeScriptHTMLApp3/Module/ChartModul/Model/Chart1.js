@@ -14,6 +14,10 @@
     fh.WriteLine("Some text goes here...");
     fh.Close();*/
 
+    // Initialisierung von Variablen für die Legende
+    var legendRectSize = 18;
+    var legendSpacing = 4;
+
     var margin = { top: 350, right: 480, bottom: 350, left: 480 },
     radius = Math.min(margin.top, margin.right, margin.bottom, margin.left) - 10;
 
@@ -78,12 +82,36 @@
 
         var path = svg.selectAll("path")
             .data(partition.nodes(root).slice(1))
-          .enter().append("path")
+            .enter().append("path")
             .attr("d", arc)
             .style("fill", function (d) { return d.fill; })
             .each(function (d) { this._current = updateArc(d); })
             .on("click", zoomIn);
 
+        // Legt den Bereich der Legende fest
+        var legend = svg.selectAll('.legend')
+                        .data(hue.domain().slice(1).reverse())
+                        .enter()
+                        .append('g')
+                        .attr('class', 'legend')
+                        .attr('transform', function (d, i) {
+                            var height = legendRectSize + legendSpacing;
+                            var offset = height * hue.domain().slice(1).length / 2;
+                            var horz = -2 * legendRectSize;
+                            var vert = i * height - offset;
+                            return 'translate(' + horz + ',' + vert + ')';
+                        });
+        // Fügt die Quadrate der Legende in der jeweiligen Farbe hinzu
+        legend.append('rect')
+              .attr('width', legendRectSize)
+              .attr('height', legendRectSize)
+              .style('fill', hue)
+              .style('stroke', hue);
+        // Fügt die Beschriftung der Legende hinzu
+        legend.append('text')
+              .attr('x', legendRectSize + legendSpacing)
+              .attr('y', legendRectSize - legendSpacing)
+              .text(partition.value(function (d) { return d.name; }));
 
         function zoomIn(p) {
             weiterleitung(p.key);

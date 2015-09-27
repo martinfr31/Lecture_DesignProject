@@ -1,0 +1,11 @@
+{
+ "name": "flare",
+ "children": [
+				{"ProdID":1,"name":"Product One2","ProzessID":2,"ProzName":"Fertigungsschritt1","ResID":1,"ResName":"Res1","ResTyp":"Maschine","size":50,"fix":10,"kosten":30,"ResVeranederbar":10},
+				{"ProdID":1,"name":"Product One3","ProzessID":2,"ProzName":"Fertigungsschritt1","ResID":2,"ResName":"Res2","ResTyp":"Mitarbeiter","size":20,"fix":10,"kosten":30,"ResVeranederbar":10},
+				{"ProdID":1,"name":"Product One4","ProzessID":2,"ProzName":"Fertigungsschritt1","ResID":3,"ResName":"Res3","ResTyp":"Rohstoff","size":70,"fix":10,"kosten":30,"ResVeranederbar":10},
+				{"ProdID":1,"name":"Product One5","ProzessID":2,"ProzName":"Fertigungsschritt1","ResID":4,"ResName":"Res4","ResTyp":"Betriebsstoff","size":40,"fix":10,"kosten":30,"ResVeranederbar":10},
+				{"ProdID":1,"name":"Product One6","ProzessID":2,"ProzName":"Fertigungsschritt1","ResID":5,"ResName":"Res5","ResTyp":"Hilfsstoff","size":30,"fix":10,"kosten":30,"ResVeranederbar":10},
+				{"ProdID":1,"name":"Product One7","ProzessID":2,"ProzName":"Fertigungsschritt1","ResID":6,"ResName":"Res6","ResTyp":"Betriebsmittel","size":30,"fix":10,"kosten":30,"ResVeranederbar":10}
+			]
+}

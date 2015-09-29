@@ -1,9 +1,9 @@
-﻿<script src="Module/ChartModul/Model/Chart1.js"></script>
-<script src="Scripts/d3/d3.js"></script>
-
+﻿<!--Template für Diagramm 1-->
+<script src="Scripts/Industrie11/WriteFile.js"></script>
+<script src="Module/ChartModul/Model/Chart1.js"></script>
 <section class="col-md-{{size}}">
 
-        <h1>Chart1</h1>
+        <h1>Kostenübersicht</h1>
         <script>
             function myTimer() {
                 d = document.getElementById("jData").value;
@@ -12,7 +12,7 @@
             setTimeout(myTimer, 600);
         </script>
         <form>
-            <input type="text" id="jData" value="{{data}}">
+            <input type="text" id="jData" value="{{data}}" hidden="true">
         </form>
 
 </section>

@@ -1,4 +1,5 @@
-﻿/// <reference path="../../../Scripts/_app.ts" />
+﻿//Controller erstellt das Diagramm auf Basis der Widgets, Daten und views.
+/// <reference path="../../../Scripts/_app.ts" />
 module Chart {
     'use strict';
     export interface IChartCtrlScope extends ng.IScope {

@@ -1,6 +1,6 @@
 ﻿function Chart3(jData) {
 
-    //Erstellen der tmp CSV Datei für Diagramm 3
+    //Erstellen der tmp txt Datei für Diagramm 3
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     function generateCSV(p, data) {
         var csv = "State,Nicht veraenderbar,Kosten,Potential\r\n";
@@ -22,25 +22,19 @@
                 //alert(csv);
             }
         }
+        path = "C:\\Users\\martin.knelsen\\Documents\\GitHub\\Lecture_DesignProject\\TypeScriptHTMLApp3\\temp2.txt"
+        writefile(csv, path);
     }
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    //Parameter aus der URL auslesen
+    //Parameter aus URL auslesen
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    function getParameterByName(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(location.search);
-        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
-
     var parm = getParameterByName('Key');
     if (parm != "") {
         var p = parm.split(".");
         generateCSV(p, jData);
     }
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 
 
     //Diagramm erstellen
@@ -74,8 +68,7 @@
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-
-    d3.csv("chart2_demo.csv", function (error, data) {
+    d3.csv("temp2.txt", function (error, data) {
         if (error) throw error;
 
         color.domain(d3.keys(data[0]).filter(function (key) { return key !== "State"; }));
@@ -86,7 +79,7 @@
             d.total = d.ages[d.ages.length - 1].y1;
         });
 
-        //data.sort(function (a, b) { return b.total - a.total; });
+        data.sort(function (a, b) { return b.total - a.total; });
 
         x.domain(data.map(function (d) { return d.State; }));
         y.domain([0, d3.max(data, function (d) { return d.total; })]);

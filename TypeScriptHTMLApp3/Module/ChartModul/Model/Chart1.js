@@ -1,18 +1,11 @@
 ﻿function Chart1(jData)
 {
-    var data = JSON.parse(jData);
-    //alert(d[0].name);
-    //alert(d[0].children);
+    //Datei für Diagramm 1 erstellen
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     var jData = jData.substring(1, jData.length - 1);
-
-    /*var myObject, newfile;
-    myObject = new ActiveXObject("Scripting.FileSystemObject");
-    newfile = myObject.CreateTextFile("c:\\testing.txt", false);
-
-    var fso = new ActiveXObject("Scripting.FileSystemObject");
-    var fh = fso.CreateTextFile("c:\\Test.txt", true);
-    fh.WriteLine("Some text goes here...");
-    fh.Close();*/
+    path = "C:\\Users\\martin.knelsen\\Documents\\GitHub\\Lecture_DesignProject\\TypeScriptHTMLApp3\\temp0.txt"
+    writefile(jData, path);
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     // Initialisierung von Variablen für die Legende
     var legendRectSize = 18;
@@ -45,12 +38,14 @@
         .outerRadius(function (d) { return radius / 3 * (d.depth + 1) - 1; });
 
 
-    d3.json("chart1_demo_testdaten2.txt", function (error, root) {
+    d3.json("temp0.txt", function (error, root) {
 
-
+        //Weiterleitung bei Klick auf das Diagramm
+        //+++++++++++++++++++++++++++++++++++++++++++
         function weiterleitung(parm) {
-            window.location = "./index.html?Key=" + parm; //Weiterleitung
+            window.location = "./index.html?Key=" + parm; 
         }
+        //+++++++++++++++++++++++++++++++++++++++++++
 
         // Compute the initial layout on the entire tree to sum sizes.
         // Also compute the full name and fill color for each node,
@@ -64,9 +59,8 @@
                
                 d._children = d.children;
                 d.sum = d.value;
-                d.key = key(d);//Daten Json
-                d.fill = fill(d);//Farbe
-                //alert(d.key);
+                d.key = key(d);     //Name Produkt
+                d.fill = fill(d);   //Farbe Produkt
             });
 
         // Now redefine the value function to use the previously-computed sum.
@@ -115,9 +109,7 @@
               .text(partition.value(function (d) { return d.name; }));
 
         function zoomIn(p) {
-            //alert(p.ProductID);
             weiterleitung(p.key);
-           
             if (p.depth > 1) p = p.parent;
             if (!p.children) return;
             zoom(p, p);
@@ -210,5 +202,4 @@
     }
 
     d3.select(self.frameElement).style("height", margin.top + margin.bottom + "px");
-
 }

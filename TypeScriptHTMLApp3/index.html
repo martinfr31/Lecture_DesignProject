@@ -6,97 +6,43 @@
 	<title>Industrie 11</title>
 	<link href="Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="Content/app.css" rel="stylesheet" type="text/css" />
-	<style>
-		circle,
-		path {
-			cursor: pointer;
-		}
-
-		circle {
-			fill: none;
-			pointer-events: all;
-		}
-
-        body {
-        	font: 10px sans-serif;
-        }
-        
-        .bar rect {
-        	fill: steelblue;
-        	shape-rendering: crispEdges;
-        }
-        
-        .bar text {
-        	fill: #fff;
-        }
-        
-        .axis path, .axis line {
-        	fill: none;
-        	stroke: #000;
-        	shape-rendering: crispEdges;
-        }
-        
-        .bar {
-          fill: steelblue;
-        }
-        
-        .x.axis path {
-          display: none;
-        }
-
-        .legend {
-		  font-size: 12px;
-		}
-		rect {
-		  stroke-width: 2;
-		}
-	</style>
+    <link href="Content/diagramme.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="skin-blue">
 	<div class="wrapper row-offcanvas row-offcanvas-left">
 		<div class="content">
-			<div class="row">
-
 				<div ng-controller="ChartController" id="Chart">
 					<chartwidget1 data="chartData" size="6"></chartwidget1>
 				</div>
-				
-			</div>
 		</div>
 	</div>
-	<script>
-		function getParameterByName(name) {
-			name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-			var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-				results = regex.exec(location.search);
-			return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-		}
-		var parm = getParameterByName('Key');
-		if (parm != "")
-		{
-			var res = parm.split(".");
-			switch(res.length) {
-				case 1:
-					document.getElementById('Chart').innerHTML = '<chartwidget2 data="chartData" size="6"></chartwidget2>';
-					//window.location = "./index.html?Key=" + parm;
-					break;
-				case 2:
-					document.getElementById('Chart').innerHTML = '<chartwidget3 data="chartData" size="6"></chartwidget3>';
-					//window.location = "./index.html?Key=" + parm;
-					break;
-				default:
-					alert("Diagramm noch nicht definiert!");
-				} 
-		} else {
-		   // document.getElementById('Chart').innerHTML = '<chartwidget1 data="chartData" size="6"></chartwidget1>';
-		}
 
-	</script>
-
+    <script src="Scripts/Industrie11/WriteFile.js"></script>
+    <script src="Scripts/d3/d3.js"></script>
 	<script src="Scripts/jquery-1.11.2.min.js"></script>
 	<script src="Scripts/angular.js"></script>
 	<script src="app.js"></script>
+    <script>
+        var parm = getParameterByName('Key');
+        if (parm != "") {
+            var res = parm.split(".");
+            switch (res.length) {
+                case 1:
+                    document.getElementById('Chart').innerHTML = '<chartwidget2 data="chartData" size="6"></chartwidget2>';
+                    //window.location = "./index.html?Key=" + parm;
+                    break;
+                case 2:
+                    document.getElementById('Chart').innerHTML = '<chartwidget3 data="chartData" size="6"></chartwidget3>';
+                    //window.location = "./index.html?Key=" + parm;
+                    break;
+                default:
+                    alert("Diagramm noch nicht definiert!");
+            }
+        } else {
+            // document.getElementById('Chart').innerHTML = '<chartwidget1 data="chartData" size="6"></chartwidget1>';
+        }
+    </script>
 </body>
 </html>
 

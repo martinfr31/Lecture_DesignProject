@@ -1,0 +1,4 @@
+State,ProcessID,Nicht veraenderbar,Kosten,Potential
+1 Prozess,1,1000,2000,3000
+2 Prozess,2,15000,5000,10000
+

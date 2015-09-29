@@ -1,4 +1,5 @@
-﻿/// <reference path="../../../Scripts/_app.ts" />
+﻿//Definition Typescript Service
+/// <reference path="../../../Scripts/_app.ts" />
 module Chart {
     export class ChartService extends App.HttpHandlerService {
 

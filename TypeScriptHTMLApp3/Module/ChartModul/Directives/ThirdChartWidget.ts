@@ -1,4 +1,5 @@
-﻿/// <reference path="../../../Scripts/_app.ts" />
+﻿//Definition Widget Chart3
+/// <reference path="../../../Scripts/_app.ts" />
 module Chart {
     'use strict';
 

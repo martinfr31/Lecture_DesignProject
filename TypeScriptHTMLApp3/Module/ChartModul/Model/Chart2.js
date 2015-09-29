@@ -1,18 +1,18 @@
 ﻿function Chart2(jData)
 {
+    //Erstellen der tmp txt Datei für Diagramm 2
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     function generateCSV(s, data)
     {
-        var csv = "State,Nicht veraenderbar,Kosten,Potential\r\n";
+        var csv = "State,ProcessID,Nicht veraenderbar,Kosten,Potential\r\n";
         var d = JSON.parse(data);
         for (var i = 0; i < d[0].children.length; i++) {
-            
             obj = d[0].children[i];
             if(obj.name == s)
             {
                 obj2 = obj.children;
                 for (var k = 0; k < obj2.length; k++) {
-                    csv += obj.children[k].name + ",";
-                    //alert(obj2[k].name);
+                    csv += obj.children[k].name + "," + obj.children[k].ProzessID + ",";
                     obj3 = obj2[k].children;
                     var fix = 0, kosten = 0, veraenderbar = 0;
                     for(var m = 0; m < obj3.length; m++)
@@ -20,62 +20,29 @@
                         fix += parseInt(obj3[m].fix);
                         kosten += parseInt(obj3[m].kosten);
                         veraenderbar += parseInt(obj3[m].ResVeranederbar);
-                        //alert(obj3[m].name);
                     }
                     csv += fix + "," + kosten + "," + veraenderbar + '\r\n';
                 }
                 //alert(csv);
             }
         }
+        path = "C:\\Users\\martin.knelsen\\Documents\\GitHub\\Lecture_DesignProject\\TypeScriptHTMLApp3\\temp1.txt"
+        writefile(csv, path);
     }
-
-    //var data = "...";// this is your data that you want to pass to the server (could be json)
-    ////next you would initiate a XMLHTTPRequest as following (could be more advanced):
-    //var url = "get_data.php";//your url to the server side file that will receive the data.
-    //var http = new XMLHttpRequest();
-    //http.open("POST", url, true);
-
-    ////Send the proper header information along with the request
-    //http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    //http.setRequestHeader("Content-length", params.length);
-    //http.setRequestHeader("Connection", "close");
-
-    //http.onreadystatechange = function () {//Call a function when the state changes.
-    //    if (http.readyState == 4 && http.status == 200) {
-    //        alert(http.responseText);//check if the data was received successfully.
-    //    }
-    //}
-    //http.send(data);
-
-        try {
-            var fso, s;
-            fso = new ActiveXObject("Scripting.FileSystemObject");
-            s = fso.CreateTextFile("C:\1_Daten_UNITY\Martin.Knelsen\Desktop\test.txt", true);
-            s.writeline("This is a test");
-            s.Close();
-        }
-        catch (err) {
-            var strErr = 'Error:';
-            strErr += '\nNumber:' + err.number;
-            strErr += '\nDescription:' + err.description;
-            document.write(strErr);
-        }
- 
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-    function getParameterByName(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(location.search);
-        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
-
+    //Parameter aus URL auslesen
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     var parm = getParameterByName('Key');
     if (parm != "") {
         generateCSV(parm, jData);
     }
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
+    //Diagramm erstellen
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     var margin = { top: 20, right: 20, bottom: 30, left: 40 },
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
@@ -105,12 +72,13 @@
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
         
 
-
-   d3.csv("chart3_demo.csv", function (error, data) {
+    d3.csv("temp1.txt", function (error, data) {
         if (error) throw error;
 
         //Definition der Werte, aus denen das Diagramm zusammen gebaut werden sollen. Überschrift wird gefiltert
-        color.domain(d3.keys(data[0]).filter(function (key) { return key !== "State"; }));
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        color.domain(d3.keys(data[0]).filter(function (key) { return key !== "State"; }).filter(function (key) { return key !== "ProcessID"; }));
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         data.forEach(function (d) {
             var y0 = 0;
@@ -138,18 +106,11 @@
             .style("text-anchor", "end")
             .text("Kosten");
 
-        //var processID = svg.selectAll(".ProcessID")
-        //    .data(data, function (d) { alert(d.ProcessID); })
-        //    .text("ProcessID");
-            
-        //alert(processID);
-        //alert(processID.data);
-
-
         var state = svg.selectAll(".state")
             .data(data)
           .enter().append("g")
-            .on("click", function (d) { window.location = window.location.href.toString() + "." + d.ProcessID; }) //Weiterleitung
+            //Weiterleitung
+            .on("click", function (d) { window.location = window.location.href.toString() + "." + d.State; }) 
             .attr("class", "g")
             .attr("transform", function (d) { return "translate(" + x(d.State) + ",0)"; });
 

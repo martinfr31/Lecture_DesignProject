@@ -1,0 +1,7 @@
+State,ProcessID,Nicht veraenderbar,Kosten,Potential
+Process1,1,20,60,20
+Process2,2,50,150,50
+Process3,3,50,150,50
+Process4,4,10,30,10
+Process5,5,40,120,40
+

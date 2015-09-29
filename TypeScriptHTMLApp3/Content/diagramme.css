@@ -1,0 +1,43 @@
+﻿		circle,
+		path {
+			cursor: pointer;
+		}
+
+		circle {
+			fill: none;
+			pointer-events: all;
+		}
+
+        body {
+        	font: 10px sans-serif;
+        }
+        
+        .bar rect {
+        	fill: steelblue;
+        	shape-rendering: crispEdges;
+        }
+        
+        .bar text {
+        	fill: #fff;
+        }
+        
+        .axis path, .axis line {
+        	fill: none;
+        	stroke: #000;
+        	shape-rendering: crispEdges;
+        }
+        
+        .bar {
+          fill: steelblue;
+        }
+        
+        .x.axis path {
+          display: none;
+        }
+
+        .legend {
+		  font-size: 12px;
+		}
+		rect {
+		  stroke-width: 2;
+		}

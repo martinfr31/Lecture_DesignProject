@@ -38,6 +38,7 @@ var App;
     })(Service);
     App.HttpHandlerService = HttpHandlerService;
 })(App || (App = {}));
+//Definition Typescript Service
 /// <reference path="../../../Scripts/_app.ts" />
 var Chart;
 (function (Chart) {
@@ -56,6 +57,7 @@ var Chart;
     })(App.HttpHandlerService);
     Chart.ChartService = ChartService;
 })(Chart || (Chart = {}));
+//Definition Widget Chart1
 /// <reference path="../../../Scripts/_app.ts" />
 var Chart;
 (function (Chart) {
@@ -77,6 +79,7 @@ var Chart;
     })();
     Chart.FirstChartWidget = FirstChartWidget;
 })(Chart || (Chart = {}));
+//Definition Widget Chart2
 /// <reference path="../../../Scripts/_app.ts" />
 var Chart;
 (function (Chart) {
@@ -98,6 +101,7 @@ var Chart;
     })();
     Chart.SecondChartWidget = SecondChartWidget;
 })(Chart || (Chart = {}));
+//Definition Widget Chart3
 /// <reference path="../../../Scripts/_app.ts" />
 var Chart;
 (function (Chart) {
@@ -119,6 +123,7 @@ var Chart;
     })();
     Chart.ThirdChartWidget = ThirdChartWidget;
 })(Chart || (Chart = {}));
+//Controller erstellt das Diagramm auf Basis der Widgets, Daten und views.
 /// <reference path="../../../Scripts/_app.ts" />
 var Chart;
 (function (Chart) {

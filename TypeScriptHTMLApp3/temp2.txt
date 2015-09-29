@@ -1,2 +1,7 @@
 State,Nicht veraenderbar,Kosten,Potential
+Res1,10,30,10
+Res2,10,30,10
+Res3,10,30,10
+Res4,10,30,10
+Res5,10,30,10
 

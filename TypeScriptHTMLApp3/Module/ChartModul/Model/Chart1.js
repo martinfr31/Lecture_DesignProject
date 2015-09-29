@@ -56,9 +56,9 @@
             })
             .nodes(root)
             .forEach(function (d) {
-               
+                //alert(key(d) + " " + d.value);
                 d._children = d.children;
-                d.sum = d.value;
+                d.sum = d.value;    //Chartgröße
                 d.key = key(d);     //Name Produkt
                 d.fill = fill(d);   //Farbe Produkt
             });

@@ -11,8 +11,9 @@
                 obj2 = obj.children;
                 for (var k = 0; k < obj2.length; k++) {
                     
-                    if (p[1] == obj2[k].ProzessID)
-                    {                        
+                    if (p[1] == obj2[k].name)
+                    {
+                        alert(obj2[k].name);
                         obj3 = obj2[k].children;
                         for (var m = 0; m < obj3.length; m++) {
                             csv += obj3[m].ResName + "," + obj3[m].fix + "," + obj3[m].kosten + "," + obj3[m].ResVeranederbar + "\r\n";

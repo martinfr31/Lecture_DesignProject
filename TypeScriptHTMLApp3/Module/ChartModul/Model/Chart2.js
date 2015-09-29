@@ -26,7 +26,7 @@
                 //alert(csv);
             }
         }
-        path = "C:\\Users\\martin.knelsen\\Documents\\GitHub\\Lecture_DesignProject\\TypeScriptHTMLApp3\\temp1.txt"
+        path = "C:\\Users\\krings\\Dropbox\\Development\\Neuer Ordner\\Lecture_DesignProject\\TypeScriptHTMLApp3\\temp1.txt"
         writefile(csv, path);
     }
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

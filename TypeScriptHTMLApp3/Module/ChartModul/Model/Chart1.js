@@ -3,11 +3,11 @@
     //Datei für Diagramm 1 erstellen
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     var jData = jData.substring(1, jData.length - 1);
-    path = "C:\\Users\\martin.knelsen\\Documents\\GitHub\\Lecture_DesignProject\\TypeScriptHTMLApp3\\temp0.txt"
+    path = "C:\\Users\\krings\\Dropbox\\Development\\Neuer Ordner\\Lecture_DesignProject\\TypeScriptHTMLApp3\\temp0.txt"
     writefile(jData, path);
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    // Initialisierung von Variablen für die Legende
+	// Initialisierung von Variablen für die Legende
     var legendRectSize = 18;
     var legendSpacing = 4;
 
@@ -16,16 +16,26 @@
 
     var hue = d3.scale.category10();
 
-    var luminance = d3.scale.sqrt()
-        .domain([0, 1e6])
-        .clamp(true)
-        .range([90, 20]);
+    var c1 = d3.select('body').append('div').attr('id', 'c1')
+											.style('position', 'absolute')
+											.style('width', margin.left + margin.right)
+											.style('height', margin.top + margin.bottom);
+    var svg = c1.append('svg')
+				.attr('width', margin.left + margin.right)
+				.attr('height', margin.top + margin.bottom)
+				.append('g')
+				.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-    var svg = d3.select("body").append("svg")
-        .attr("width", margin.left + margin.right)
-        .attr("height", margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	// Definition des Informationen Tooltips
+    var tooltip = c1.append('div')
+					.attr('class', 'ttip');
+
+    tooltip.append('div')
+			.attr('class', 'name');
+    tooltip.append('div')
+			.attr('class', 'sum');
+    tooltip.append('div')
+			.attr('class', 'percent');
 
     var partition = d3.layout.partition()
         .sort(function (a, b) { return d3.ascending(a.name, b.name); })
@@ -69,11 +79,11 @@
             .value(function (d) { return d.sum; });
 
         var center = svg.append("circle")
-            .attr("r", radius / 3)
-            .on("click", zoomOut);
+						.attr("r", radius / 3)
+						.on("click", zoomOut);
 
         center.append("title")
-            .text("zoom out");
+				.text("zoom out");
 
         var path = svg.selectAll("path")
             .data(partition.nodes(root).slice(1))
@@ -83,30 +93,42 @@
             .each(function (d) { this._current = updateArc(d); })
             .on("click", zoomIn);
 
-        // Legt den Bereich der Legende fest
+    	// Legt den Bereich der Legende fest
         var legend = svg.selectAll('.legend')
-                        .data(hue.domain().slice(1).reverse())
-                        .enter()
-                        .append('g')
-                        .attr('class', 'legend')
-                        .attr('transform', function (d, i) {
-                            var height = legendRectSize + legendSpacing;
-                            var offset = height * hue.domain().slice(1).length / 2;
-                            var horz = -2 * legendRectSize;
-                            var vert = i * height - offset;
-                            return 'translate(' + horz + ',' + vert + ')';
-                        });
-        // Fügt die Quadrate der Legende in der jeweiligen Farbe hinzu
+						.data(hue.domain().slice(1))
+						.enter()
+						.append('g')
+						.attr('class', 'legend')
+						.attr('transform', function (d, i) {
+							var height = legendRectSize + legendSpacing;
+							var offset = height * hue.domain().slice(1).length / 2;
+							var horz = -2 * legendRectSize;
+							var vert = i * height - offset;
+							return 'translate(' + horz + ',' + vert + ')';
+						});
+    	// Fügt die Quadrate der Legende in der jeweiligen Farbe hinzu
         legend.append('rect')
-              .attr('width', legendRectSize)
-              .attr('height', legendRectSize)
-              .style('fill', hue)
-              .style('stroke', hue);
-        // Fügt die Beschriftung der Legende hinzu
+			  .attr('width', legendRectSize)
+			  .attr('height', legendRectSize)
+			  .style('fill', hue)
+			  .style('stroke', hue);
+    	// Fügt die Beschriftung der Legende hinzu
         legend.append('text')
-              .attr('x', legendRectSize + legendSpacing)
-              .attr('y', legendRectSize - legendSpacing)
-              .text(partition.value(function (d) { return d.name; }));
+			  .attr('x', legendRectSize + legendSpacing)
+			  .attr('y', legendRectSize - legendSpacing)
+			  .text(partition.value(function (d) { return d.name; }));
+
+        path.on('mouseover', function (d) {
+        	var total = getTotal(d);
+        	var percent = Math.round(1000 * d.sum / total) / 10;
+        	tooltip.select('.name').html(d.name);
+        	tooltip.select('.sum').html(d.sum);
+        	tooltip.select('.percent').html(percent + '%');
+        	tooltip.style('display', 'block');
+        	legend.style('display', 'none');
+        });
+
+        path.on('mouseout', function () { tooltip.style('display', 'none'); legend.style('display', 'block'); });
 
         function zoomIn(p) {
             weiterleitung(p.key);
@@ -175,6 +197,15 @@
         }
     });
 
+	// Liefert die Gesamtkosten aller Ressourcen, auf Basis der aktuellen zurück.
+	// Wird für die Berechnung des Prozentanteils einer einzelnen Ressource benötigt.
+    function getTotal(d) {
+    	for (p = d; p.parent !== undefined;)
+    		p = p.parent;
+
+    	return p.value;
+    }
+
     function key(d) {
         var k = [], p = d;
         while (p.depth) k.push(p.name), p = p.parent;
@@ -185,7 +216,6 @@
         var p = d;
         while (p.depth > 1) p = p.parent;
         var c = d3.lab(hue(p.name));
-        c.l = luminance(d.sum);
         return c;
     }
 

@@ -24,11 +24,44 @@
                     }
                     csv += fix + "," + kosten + "," + veraenderbar + '\r\n';
                 }
-                alert(csv);
+                //alert(csv);
             }
         }
     }
-    
+
+    //var data = "...";// this is your data that you want to pass to the server (could be json)
+    ////next you would initiate a XMLHTTPRequest as following (could be more advanced):
+    //var url = "get_data.php";//your url to the server side file that will receive the data.
+    //var http = new XMLHttpRequest();
+    //http.open("POST", url, true);
+
+    ////Send the proper header information along with the request
+    //http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    //http.setRequestHeader("Content-length", params.length);
+    //http.setRequestHeader("Connection", "close");
+
+    //http.onreadystatechange = function () {//Call a function when the state changes.
+    //    if (http.readyState == 4 && http.status == 200) {
+    //        alert(http.responseText);//check if the data was received successfully.
+    //    }
+    //}
+    //http.send(data);
+
+        try {
+            var fso, s;
+            fso = new ActiveXObject("Scripting.FileSystemObject");
+            s = fso.CreateTextFile("C:\1_Daten_UNITY\Martin.Knelsen\Desktop\test.txt", true);
+            s.writeline("This is a test");
+            s.Close();
+        }
+        catch (err) {
+            var strErr = 'Error:';
+            strErr += '\nNumber:' + err.number;
+            strErr += '\nDescription:' + err.description;
+            document.write(strErr);
+        }
+ 
+
 
     function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -70,10 +103,13 @@
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        
 
-    d3.csv("chart2_demo.csv", function (error, data) {
+
+   d3.csv("chart3_demo.csv", function (error, data) {
         if (error) throw error;
 
+        //Definition der Werte, aus denen das Diagramm zusammen gebaut werden sollen. Überschrift wird gefiltert
         color.domain(d3.keys(data[0]).filter(function (key) { return key !== "State"; }));
 
         data.forEach(function (d) {
@@ -82,9 +118,9 @@
             d.total = d.ages[d.ages.length - 1].y1;
         });
 
-        data.sort(function (a, b) { return b.total - a.total; });
+        //data.sort(function (a, b) { return b.total - a.total; });
 
-        x.domain(data.map(function (d) { return d.State; }));
+        x.domain(data.map(function (d) { return d.State; })); 
         y.domain([0, d3.max(data, function (d) { return d.total; })]);
 
         svg.append("g")
@@ -102,9 +138,18 @@
             .style("text-anchor", "end")
             .text("Kosten");
 
+        //var processID = svg.selectAll(".ProcessID")
+        //    .data(data, function (d) { alert(d.ProcessID); })
+        //    .text("ProcessID");
+            
+        //alert(processID);
+        //alert(processID.data);
+
+
         var state = svg.selectAll(".state")
             .data(data)
           .enter().append("g")
+            .on("click", function (d) { window.location = window.location.href.toString() + "." + d.ProcessID; }) //Weiterleitung
             .attr("class", "g")
             .attr("transform", function (d) { return "translate(" + x(d.State) + ",0)"; });
 
@@ -114,7 +159,9 @@
             .attr("width", x.rangeBand())
             .attr("y", function (d) { return y(d.y1); })
             .attr("height", function (d) { return y(d.y0) - y(d.y1); })
-            .style("fill", function (d) { return color(d.name); });
+            .style("fill", function (d) { return color(d.name); })
+            .text(function (d) { return d; });
+            
 
         var legend = svg.selectAll(".legend")
             .data(color.domain().slice().reverse())

@@ -1,6 +1,6 @@
 ﻿function Chart1(jData)
 {
-    var data = JSON.parse(jData)
+    var data = JSON.parse(jData);
     //alert(d[0].name);
     //alert(d[0].children);
     var jData = jData.substring(1, jData.length - 1);
@@ -43,6 +43,7 @@
         .endAngle(function (d) { return d.x + d.dx - .01 / (d.depth + .5); })
         .innerRadius(function (d) { return radius / 3 * d.depth; })
         .outerRadius(function (d) { return radius / 3 * (d.depth + 1) - 1; });
+
 
     d3.json("chart1_demo_testdaten2.txt", function (error, root) {
 
@@ -114,6 +115,7 @@
               .text(partition.value(function (d) { return d.name; }));
 
         function zoomIn(p) {
+            //alert(p.ProductID);
             weiterleitung(p.key);
            
             if (p.depth > 1) p = p.parent;

@@ -96,6 +96,38 @@
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
 
+        //var prozess = svg.selectAll('.prozess')
+        //        .data(hue.domain().slice(1).reverse())
+        //        .enter()
+        //        .append('g')
+        //        .attr('class', 'prozess')
+        //        .attr('transform', function (d, i) {
+        //            var height = legendRectSize + legendSpacing;
+        //            var offset = height * hue.domain().slice(1).length / 2;
+        //            var horz = -2 * legendRectSize;
+        //            var vert = i * height - offset;
+        //            return 'translate(' + horz + ',' + vert + ')';
+        //        });
+        //// Fügt die Quadrate der Legende in der jeweiligen Farbe hinzu
+        //prozess.append('rect')
+        //      .attr('width', legendRectSize)
+        //      .attr('height', legendRectSize)
+        //      .style('fill', hue)
+        //      .style('stroke', hue);
+        //// Fügt die Beschriftung der Legende hinzu
+        //legend.append('text')
+        //      .attr('x', legendRectSize + legendSpacing)
+        //      .attr('y', legendRectSize - legendSpacing)
+        //      .text(partition.value(function (d) { return d.name; }));
+
+       // svg.append("polygon")
+            //.points = ("0,0 100,0 120,30 100,60 00,60 20,30 0,0")
+            //.coordinates = ("0,0 100,0 120,30 100,60 00,60 20,30 0,0")
+          //  .text("test")
+         //   .style = ("fill", "blue")
+            //.attr("x", width - 30)
+          //  .attr("y", 35);
+
         svg.append("g")
             .attr("class", "y axis")
             .call(yAxis)
@@ -105,7 +137,7 @@
             .attr("dy", ".71em")
             .style("text-anchor", "end")
             .text("Kosten");
-
+        
         var state = svg.selectAll(".state")
             .data(data)
           .enter().append("g")

@@ -26,6 +26,7 @@
                 //alert(csv);
             }
         }
+<<<<<<< HEAD
        // path = "C:\\Users\\martin.knelsen\\Documents\\GitHub\\Lecture_DesignProject\\TypeScriptHTMLApp3\\temp1.txt"
        // writefile(csv, path);
 
@@ -45,6 +46,10 @@
             });
         }
         DeleteKartItems();
+=======
+        path = "C:\\Users\\krings\\Dropbox\\Development\\Neuer Ordner\\Lecture_DesignProject\\TypeScriptHTMLApp3\\temp1.txt"
+        writefile(csv, path);
+>>>>>>> origin/master
     }
 
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

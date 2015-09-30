@@ -26,9 +26,27 @@
                 //alert(csv);
             }
         }
-        path = "C:\\Users\\martin.knelsen\\Documents\\GitHub\\Lecture_DesignProject\\TypeScriptHTMLApp3\\temp1.txt"
-        writefile(csv, path);
+       // path = "C:\\Users\\martin.knelsen\\Documents\\GitHub\\Lecture_DesignProject\\TypeScriptHTMLApp3\\temp1.txt"
+       // writefile(csv, path);
+
+        function DeleteKartItems() {     
+            $.ajax({
+                type: "POST",
+                url: 'createFile.aspx',
+                data: "",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    $("#divResult").html("success");
+                },
+                error: function (e) {
+                    $("#divResult").html("Something Wrong.");
+                }
+            });
+        }
+        DeleteKartItems();
     }
+
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
@@ -185,4 +203,5 @@
             }
 
         });
+    }
 }

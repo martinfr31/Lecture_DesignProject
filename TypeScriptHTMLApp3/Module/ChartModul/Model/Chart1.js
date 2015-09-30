@@ -2,9 +2,14 @@
 {
     //Datei für Diagramm 1 erstellen
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    var jData = jData.substring(1, jData.length - 1);
-    path = "C:\\Users\\martin.knelsen\\Documents\\GitHub\\Lecture_DesignProject\\TypeScriptHTMLApp3\\temp0.txt"
-    writefile(jData, path);
+    //var jData = jData.substring(0, jData.length);
+
+    //setTimeout(setCookie(jData), 100);
+  
+    //window.location = "./createFile.aspx?Key=Kostenuebersicht&name=temp0.txt&created=0";
+    
+    //path = "C:\\Users\\martin.knelsen\\Documents\\GitHub\\Lecture_DesignProject\\TypeScriptHTMLApp3\\temp0.txt"
+    //writefile(wert3, path);
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     // Initialisierung von Variablen für die Legende

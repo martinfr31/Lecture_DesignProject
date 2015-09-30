@@ -13,7 +13,7 @@
 	<div class="wrapper row-offcanvas row-offcanvas-left">
 		<div class="content">
 				<div ng-controller="ChartController" id="Chart">
-					<chartwidget1 data="chartData" size="6"></chartwidget1>
+					
 				</div>
 		</div>
 	</div>
@@ -24,6 +24,14 @@
 	<script src="Scripts/angular.js"></script>
 	<script src="app.js"></script>
     <script>
+
+        d = document.getElementById("jData").value;
+        //var jData = jData.substring(0, jData.length);
+        alert(d);
+        setCookie(d);
+
+        window.location = "./createFile.aspx?Key=Kostenuebersicht&name=temp0.txt&created=0";
+
         var parm = getParameterByName('Key');
         if (parm != "") {
             var res = parm.split(".");
@@ -37,7 +45,7 @@
                     //window.location = "./index.html?Key=" + parm;
                     break;
                 default:
-                    alert("Diagramm noch nicht definiert!");
+                    document.getElementById('Chart').innerHTML = '<chartwidget1 data="chartData" size="6"></chartwidget1>';'
             }
         } else {
             // document.getElementById('Chart').innerHTML = '<chartwidget1 data="chartData" size="6"></chartwidget1>';
